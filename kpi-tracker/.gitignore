@@ -1,8 +1,0 @@
-node_modules/
-.next/
-.env
-.env*.local
-.cache/
-*.tsbuildinfo
-next-env.d.ts
-docs/phase0-report.md
