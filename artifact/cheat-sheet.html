@@ -243,6 +243,49 @@ a.resource .arrow { color: var(--rail-teal); }
 .small-link { background: none; border: 0; padding: 0; font-size: 12px; color: var(--teal-strong); cursor: pointer; }
 .small-link:hover { text-decoration: underline; }
 
+/* Meetings */
+.mtg-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 36px; }
+@media (max-width: 860px) { .mtg-grid { grid-template-columns: minmax(0, 1fr); } }
+.mtg-grid > .small-link { grid-column: 1 / -1; justify-self: start; }
+.mtg-allday { text-transform: none; letter-spacing: 0; font-weight: 400; color: var(--faint); }
+.mtg-list { list-style: none; margin: 0; padding: 0; }
+.mtg { display: grid; grid-template-columns: 64px minmax(0, 1fr) auto; gap: 10px; align-items: baseline; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.mtg-time { font-size: 13px; color: var(--muted); }
+.mtg.now .mtg-time { color: var(--teal-strong); font-weight: 600; }
+.mtg.now { box-shadow: inset 3px 0 0 var(--teal); padding-left: 8px; }
+.mtg.past { opacity: 0.55; }
+.mtg.cancelled .mtg-title { text-decoration: line-through; }
+.mtg-body { display: flex; flex-direction: column; min-width: 0; }
+.mtg-title { font-weight: 500; overflow-wrap: anywhere; }
+.mtg-meta { font-size: 12px; color: var(--muted); }
+.mtg-accts { display: flex; flex-wrap: wrap; gap: 4px; justify-content: flex-end; }
+.prep-chip { font-size: 12px; font-weight: 600; text-decoration: none; padding: 3px 9px; border-radius: 999px; background: var(--teal-soft); color: var(--teal-strong); border: 1px solid var(--teal-line); white-space: nowrap; }
+.prep-chip:hover { background: var(--teal); color: var(--card); }
+.mtg-none { font-size: 13px; color: var(--faint); margin: 4px 0 8px; }
+.campaign-note { font-size: 12px; color: var(--muted); margin: -4px 0 10px; }
+.campaign-note summary { cursor: pointer; }
+.campaign-note ul { margin: 6px 0 0; padding-left: 18px; }
+
+/* Coverage */
+.cov-summary { display: flex; flex-wrap: wrap; gap: 6px; margin: -4px 0 12px; }
+.cov-chip { font-size: 12px; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line-strong); background: transparent; color: var(--muted); cursor: pointer; }
+.cov-chip strong { color: var(--text); font-weight: 600; }
+.cov-chip.warn strong { color: var(--rust); }
+.cov-chip.on { background: var(--text); border-color: var(--text); color: var(--paper); }
+.cov-chip.on strong { color: var(--paper); }
+.card-flags { display: flex; gap: 6px; align-items: center; margin-bottom: 3px; flex-wrap: wrap; }
+.card-flags .primary-label { margin: 0; }
+.cov-flag { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; color: var(--rust); }
+.cov-flag.soft { color: var(--faint); }
+.cov-lines { margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--line); font-size: 12px; color: var(--muted); display: grid; gap: 1px; }
+.cov-next { color: var(--teal-strong); font-weight: 600; }
+.tl-item.meeting::before { border-radius: 2px; background: var(--teal); border-color: var(--teal); }
+.tl-item.meeting.upcoming::before { background: var(--teal-soft); }
+.tl-item.campaign::before { border-style: dotted; }
+.tl-item.campaign .tl-subject { color: var(--muted); font-weight: 400; }
+.tag-campaign { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; color: var(--faint); }
+@media (max-width: 860px) { .mtg { grid-template-columns: 56px minmax(0, 1fr); } .mtg-accts { grid-column: 2; justify-content: flex-start; } }
+
 @media (max-width: 1100px) { .dash { grid-template-columns: minmax(0, 1fr); gap: 10px; } .split { grid-template-columns: minmax(0, 1fr); gap: 10px; } }
 @media (max-width: 860px) {
   .sheet { grid-template-columns: minmax(0, 1fr); background: none; }
@@ -526,6 +569,9 @@ a.resource .arrow { color: var(--rail-teal); }
           h("div", { class: "dash-head" },
             h("span", { class: "meta", id: "dash-loaded" }, "Loading from Salesforce…"),
             h("button", { type: "button", class: "pill-btn", onclick: () => loadDashboard(true) }, "Refresh")),
+          h("section", { class: "panel" },
+            h("div", { class: "panel-head" }, h("h2", {}, "Meetings"), h("span", { class: "meta num", id: "meetings-meta" })),
+            h("div", { id: "dash-meetings", class: "mtg-grid" }, skeletonRows())),
           h("div", { class: "dash" },
             h("section", { class: "panel dash-opps" },
               h("div", { class: "panel-head" }, h("h2", {}, "Open opportunities"), h("span", { class: "meta num", id: "opps-meta" })),
@@ -536,7 +582,7 @@ a.resource .arrow { color: var(--rail-teal); }
                 h("div", { class: "panel-head" }, h("h2", {}, "Due in the next 2 weeks"), h("span", { class: "meta num", id: "due-meta" })),
                 h("div", { id: "dash-tasks" }, skeletonRows())),
               h("section", { class: "panel" },
-                h("div", { class: "panel-head" }, h("h2", {}, "Recently engaged"), h("span", { class: "meta" }, "last 14 days")),
+                h("div", { class: "panel-head" }, h("h2", {}, "Recently engaged"), h("span", { class: "meta" }, "1:1 touches · last 14 days")),
                 h("div", { id: "dash-recent" }, skeletonRows())))))));
     showHomeMode();
     input.focus();
@@ -559,12 +605,62 @@ a.resource .arrow { color: var(--rail-teal); }
     ? h("a", { href: "#a-" + id, class: cls || "acct-link", onclick: openAccount(id) }, name || "Unnamed account")
     : h("span", { class: cls || "" }, name || "—");
 
+  // ── Campaign detection ─────────────────────────────────────────────────
+  // The same email subject logged against many accounts is a campaign send,
+  // not a 1:1 touch. Computed from 30 days of email tasks, cached in the
+  // page's store for 6 hours so it's rarely recomputed.
+  const CAMPAIGN_MIN_ACCOUNTS = 5;
+  const CAMPAIGN_TTL_MS = 6 * 3600 * 1000;
+  let campaigns = null; // { list: [{s, accounts, sends}], set: Set, computedAt }
+  let campaignsPromise = null;
+  const isReplyOrInbound = (subj) => /^(email:\s*)?(\[external\][-\s]*)?(re|fw|fwd|aw)\s*:/i.test(subj) || /^\[external\]/i.test(subj);
+
+  function adoptCampaigns(doc) {
+    const list = Array.isArray(doc.list) ? doc.list.filter((c) => c && typeof c.s === "string") : [];
+    campaigns = { list, set: new Set(list.map((c) => c.s)), computedAt: doc.computedAt || 0 };
+    return campaigns;
+  }
+
+  function ensureCampaigns(force) {
+    if (!force && campaigns && Date.now() - campaigns.computedAt < CAMPAIGN_TTL_MS) return Promise.resolve(campaigns);
+    if (campaignsPromise) return campaignsPromise;
+    campaignsPromise = (async () => {
+      if (!force && db) {
+        try {
+          const snap = await db.doc("cache/campaigns").get();
+          const d = snap.exists ? snap.data() : null;
+          if (d && Date.now() - (d.computedAt || 0) < CAMPAIGN_TTL_MS) return adoptCampaigns(d);
+        } catch {}
+      }
+      const rows = await soql(
+        "SELECT Subject, AccountId FROM Task WHERE TaskSubtype = 'Email' AND ActivityDate = LAST_N_DAYS:30 " +
+        "AND AccountId != null ORDER BY ActivityDate DESC LIMIT 2000", { fresh: !!force });
+      const by = new Map();
+      for (const r of rows) {
+        const subj = r.Subject;
+        if (!subj || isReplyOrInbound(subj)) continue;
+        const g = by.get(subj) || { s: subj, accts: new Set(), sends: 0 };
+        g.accts.add(r.AccountId); g.sends++;
+        by.set(subj, g);
+      }
+      const list = [...by.values()].filter((g) => g.accts.size >= CAMPAIGN_MIN_ACCOUNTS)
+        .sort((a, b) => b.sends - a.sends).slice(0, 80)
+        .map((g) => ({ s: g.s, accounts: g.accts.size, sends: g.sends }));
+      const doc = { list, computedAt: Date.now(), sampled: rows.length };
+      if (db) db.doc("cache/campaigns").set(doc).catch(() => {});
+      return adoptCampaigns(doc);
+    })().finally(() => { campaignsPromise = null; });
+    return campaignsPromise;
+  }
+  const isCampaign = (subj) => !!(campaigns && subj && campaigns.set.has(subj));
+  const cleanCampaign = (subj) => String(subj).replace(/^email:\s*/i, "");
+
   // ── Home dashboard ─────────────────────────────────────────────────────
   let dashSeq = 0;
   async function loadDashboard(fresh) {
     if (route.view !== "search") return;
     if (!mcp) {
-      if (mcpState === "absent") ["dash-opps", "dash-tasks", "dash-recent"].forEach((id) => mount(document.getElementById(id), errorView({ code: "not_granted" })));
+      if (mcpState === "absent") ["dash-meetings", "dash-opps", "dash-tasks", "dash-recent"].forEach((id) => mount(document.getElementById(id), errorView({ code: "not_granted" })));
       return;
     }
     const seq = ++dashSeq;
@@ -578,9 +674,13 @@ a.resource .arrow { color: var(--rail-teal); }
       ["dash-tasks", soql(
         "SELECT Id, Subject, ActivityDate, Status, Priority, TaskSubtype, AccountId, Account.Name, What.Name, Who.Name, Owner.Name " +
         "FROM Task WHERE IsClosed = false AND ActivityDate <= NEXT_N_DAYS:14 ORDER BY ActivityDate ASC LIMIT 200", { fresh }), renderDashTasks],
-      ["dash-recent", soql(
-        "SELECT Id, Subject, ActivityDate, TaskSubtype, AccountId, Account.Name, Who.Name " +
-        "FROM Task WHERE IsClosed = true AND ActivityDate = LAST_N_DAYS:14 AND AccountId != null ORDER BY ActivityDate DESC LIMIT 500", { fresh }), renderDashRecent],
+      ["dash-meetings", loadMeetings(fresh), renderMeetings],
+      ["dash-recent", ensureCampaigns(false).catch(() => null).then((c) => {
+        const excl = c && c.list.length ? ` AND Subject NOT IN (${c.list.map((x) => `'${soqlStr(x.s)}'`).join(", ")})` : "";
+        return soql(
+          "SELECT Id, Subject, ActivityDate, TaskSubtype, AccountId, Account.Name, Who.Name " +
+          `FROM Task WHERE IsClosed = true AND ActivityDate = LAST_N_DAYS:14 AND AccountId != null${excl} ORDER BY ActivityDate DESC LIMIT 1000`, { fresh });
+      }), renderDashRecent],
     ];
     await Promise.all(jobs.map(async ([id, p, fn]) => {
       try {
@@ -594,6 +694,104 @@ a.resource .arrow { color: var(--rail-teal); }
     const el = document.getElementById("dash-loaded");
     if (el) mount(el, h("span", { class: "live-dot", "aria-hidden": "true" }), "Live from Salesforce · loaded ",
       new Date().toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" }));
+  }
+
+  // Meetings: Salesforce Events (your synced work calendar) for today and tomorrow,
+  // linked to accounts directly or through their attendees.
+  async function loadMeetings(fresh) {
+    const events = await soql(
+      "SELECT Id, Subject, StartDateTime, EndDateTime, IsAllDayEvent, Location, AccountId, Account.Name " +
+      "FROM Event WHERE StartDateTime >= TODAY AND StartDateTime <= NEXT_N_DAYS:1 ORDER BY StartDateTime ASC LIMIT 100", { fresh });
+    const ids = events.map((e) => e.Id).filter(isSfId);
+    let rels = [], contacts = [];
+    if (ids.length) {
+      rels = await soql(
+        `SELECT EventId, RelationId, Relation.Name, Relation.Type FROM EventRelation WHERE EventId IN (${ids.map((i) => `'${i}'`).join(",")})`, { fresh });
+      const cids = [...new Set(rels.filter((r) => r.Relation && r.Relation.Type === "Contact").map((r) => r.RelationId).filter(isSfId))];
+      if (cids.length) contacts = await soql(
+        `SELECT Id, Name, Title, AccountId, Account.Name FROM Contact WHERE Id IN (${cids.map((i) => `'${i}'`).join(",")})`, { fresh });
+    }
+    return { events, rels, contacts };
+  }
+
+  function cleanEventTitle(subj) {
+    return String(subj || "(no title)")
+      .replace(/^\[external\][-\s]*/i, "")
+      .replace(/^(updated\s+)?invitation:\s*/i, "")
+      .replace(/\s+@\s+[^@]*\([^)]*@[^)]*\)\s*$/, "")
+      .trim() || "(no title)";
+  }
+  function whereLabel(loc) {
+    if (!loc) return null;
+    if (/teams\.microsoft|microsoft teams/i.test(loc)) return "Teams";
+    if (/zoom\.us/i.test(loc)) return "Zoom";
+    if (/meet\.google/i.test(loc)) return "Google Meet";
+    if (/^https?:\/\//i.test(loc)) return "Online";
+    return loc;
+  }
+  const timeOf = (iso) => parseSfDateTime(iso).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
+  let showAllMeetings = false;
+  let lastMeetings = null;
+
+  function renderMeetings(data) {
+    lastMeetings = data;
+    const el = document.getElementById("dash-meetings");
+    const meta = document.getElementById("meetings-meta");
+    if (!el) return;
+    const { events, rels, contacts } = data;
+    const contactById = new Map(contacts.map((c) => [c.Id, c]));
+    const now = Date.now();
+    const today = localDay(new Date());
+    const items = events.map((e) => {
+      const accts = new Map();
+      if (isSfId(e.AccountId)) accts.set(e.AccountId, (e.Account && e.Account.Name) || "Account");
+      const people = [];
+      for (const r of rels.filter((r) => r.EventId === e.Id)) {
+        if (!r.Relation) continue;
+        if (r.Relation.Type === "Account") accts.set(r.RelationId, r.Relation.Name);
+        if (r.Relation.Type === "Contact") {
+          const c = contactById.get(r.RelationId);
+          people.push(r.Relation.Name + (c && c.Title ? ` (${clip(c.Title, 40)})` : ""));
+          if (c && isSfId(c.AccountId)) accts.set(c.AccountId, (c.Account && c.Account.Name) || "Account");
+        }
+      }
+      const start = parseSfDateTime(e.StartDateTime);
+      const end = e.EndDateTime ? parseSfDateTime(e.EndDateTime) : start;
+      const day = e.IsAllDayEvent ? e.StartDateTime.slice(0, 10) : localDay(start);
+      const cancelled = /cancel+ed/i.test(e.Subject || "");
+      const external = /^\[external\]/i.test(e.Subject || "");
+      return { e, accts, people, start, end, day, cancelled, external,
+        now: !e.IsAllDayEvent && start.getTime() <= now && end.getTime() > now,
+        past: !e.IsAllDayEvent && end.getTime() <= now,
+        relevant: accts.size > 0 || people.length > 0 || external };
+    });
+    const timed = items.filter((i) => !i.e.IsAllDayEvent);
+    const relevant = timed.filter((i) => i.relevant && !i.cancelled);
+    const others = timed.filter((i) => !(i.relevant && !i.cancelled));
+    if (meta) meta.textContent = `${relevant.length} with accounts · ${timed.length} total`;
+
+    const row = (i) => h("li", { class: "mtg" + (i.past ? " past" : "") + (i.cancelled ? " cancelled" : "") + (i.now ? " now" : "") },
+      h("span", { class: "mtg-time num" }, i.now ? "Now" : timeOf(i.e.StartDateTime)),
+      h("span", { class: "mtg-body" },
+        h("span", { class: "mtg-title" }, cleanEventTitle(i.e.Subject)),
+        (i.people.length || whereLabel(i.e.Location)) && h("span", { class: "mtg-meta" },
+          [i.people.slice(0, 4).join(", ") + (i.people.length > 4 ? ` +${i.people.length - 4}` : ""), whereLabel(i.e.Location)].filter(Boolean).join(" · "))),
+      h("span", { class: "mtg-accts" }, [...i.accts.entries()].map(([id, name]) =>
+        h("a", { href: "#a-" + id, class: "prep-chip", onclick: openAccount(id), title: "Open the cheat sheet for " + name }, name, h("span", { "aria-hidden": "true" }, " →")))));
+
+    const days = [[today, "Today"], [localDay(new Date(Date.now() + 864e5)), "Tomorrow"]];
+    const shown = showAllMeetings ? timed : relevant;
+    mount(el,
+      days.map(([d, label]) => {
+        const allDay = items.filter((i) => i.e.IsAllDayEvent && i.day === d).map((i) => cleanEventTitle(i.e.Subject));
+        const list = shown.filter((i) => i.day === d);
+        return h("div", { class: "mtg-day" },
+          h("div", { class: "due-label" }, label, allDay.length ? h("span", { class: "mtg-allday" }, " · All day: " + allDay.join(", ")) : null),
+          list.length ? h("ul", { class: "mtg-list" }, list.map(row))
+            : h("p", { class: "mtg-none" }, "No account meetings."));
+      }),
+      others.length > 0 && h("button", { type: "button", class: "small-link", onclick: () => { showAllMeetings = !showAllMeetings; renderMeetings(lastMeetings); } },
+        showAllMeetings ? "Show account meetings only" : `Show ${others.length} internal or cancelled ${others.length === 1 ? "event" : "events"}`));
   }
 
   function stageNum(stage) { const m = String(stage || "").match(/^(\d+)/); return m ? Number(m[1]) : 0; }
@@ -672,8 +870,11 @@ a.resource .arrow { color: var(--rail-teal); }
       byAcct.set(t.AccountId, g);
     }
     const list = [...byAcct.values()].sort((a, b) => String(b.last).localeCompare(String(a.last)) || b.n - a.n).slice(0, 12);
-    if (!list.length) { mount(el, h("p", { class: "empty" }, "No completed touches logged in the last 14 days.")); return; }
-    mount(el, h("ul", { class: "recent-list" }, list.map((g) => h("li", { class: "recent" },
+    const note = campaigns && campaigns.list.length ? h("details", { class: "campaign-note" },
+      h("summary", {}, `Campaign emails hidden (${campaigns.list.length} ${campaigns.list.length === 1 ? "campaign" : "campaigns"} sent to ${CAMPAIGN_MIN_ACCOUNTS}+ accounts)`),
+      h("ul", {}, campaigns.list.slice(0, 12).map((c) => h("li", {}, `${cleanCampaign(c.s)} · ${c.sends} sends, ${c.accounts} accounts`)))) : null;
+    if (!list.length) { mount(el, h("p", { class: "empty" }, "No 1:1 touches logged in the last 14 days."), note); return; }
+    mount(el, note, h("ul", { class: "recent-list" }, list.map((g) => h("li", { class: "recent" },
       h("div", { class: "recent-top" },
         accountLink(g.id, g.name),
         h("span", { class: "recent-count num" + (g.n >= 4 ? " dense" : "") }, `${g.n} ${g.n === 1 ? "touch" : "touches"}`)),
@@ -769,7 +970,8 @@ a.resource .arrow { color: var(--rail-teal); }
     const id = route.id;
     const fresh = !sheet || sheet.id !== id;
     if (fresh) {
-      sheet = { id, account: null, contacts: null, tasks: null, opps: null, errors: {}, loadedAt: null };
+      sheet = { id, account: null, contacts: null, tasks: null, opps: null, taskRel: null, eventRel: null, errors: {}, loadedAt: null };
+      showCampaignTasks = false; coverageFilter = "all";
       outreach = { status: "idle", text: "", error: null, ctl: null };
       pins = new Set(); ownResources = []; editor = null; drawerOpen = false; showAllTimeline = false;
       subscribeSheetDocs(id);
@@ -842,7 +1044,14 @@ a.resource .arrow { color: var(--rail-teal); }
         `SELECT Id, Name, Title, Email, Phone FROM Contact WHERE AccountId = '${sid}' ORDER BY LastName ASC NULLS LAST LIMIT 200`, { fresh: freshData }),
       tasks: soql(
         `SELECT Id, Subject, ActivityDate, CreatedDate, Status, IsClosed, TaskSubtype, Who.Name, Owner.Name ` +
-        `FROM Task WHERE AccountId = '${sid}' ORDER BY ActivityDate DESC NULLS LAST, CreatedDate DESC LIMIT 200`, { fresh: freshData }),
+        `FROM Task WHERE AccountId = '${sid}' ORDER BY ActivityDate DESC NULLS LAST, CreatedDate DESC LIMIT 500`, { fresh: freshData }),
+      taskRel: soql(
+        `SELECT RelationId, TaskId, Task.ActivityDate, Task.Subject, Task.IsClosed FROM TaskRelation ` +
+        `WHERE Task.AccountId = '${sid}' AND IsWhat = false ORDER BY Task.ActivityDate DESC LIMIT 2000`, { fresh: freshData }),
+      eventRel: soql(
+        `SELECT EventId, RelationId, Relation.Type, Event.Subject, Event.StartDateTime, Event.IsAllDayEvent, Event.Location ` +
+        `FROM EventRelation WHERE Event.AccountId = '${sid}' ORDER BY Event.StartDateTime DESC LIMIT 1000`, { fresh: freshData }),
+      campaigns: ensureCampaigns(false).then(() => []),
       opps: soql(
         `SELECT Id, Name, StageName, Amount, CloseDate, NextStep FROM Opportunity ` +
         `WHERE AccountId = '${sid}' AND IsClosed = false ORDER BY CloseDate ASC NULLS LAST LIMIT 50`, { fresh: freshData }),
@@ -851,15 +1060,15 @@ a.resource .arrow { color: var(--rail-teal); }
       try {
         const rows = await p;
         if (!current()) return;
-        sheet[key] = key === "account" ? (rows[0] || false) : rows;
+        if (key !== "campaigns") sheet[key] = key === "account" ? (rows[0] || false) : rows;
         delete sheet.errors[key];
       } catch (err) {
         if (!current()) return;
         sheet.errors[key] = err;
       }
       if (key === "account") renderAccountParts();
-      if (key === "contacts") renderContacts();
-      if (key === "tasks") renderTimeline();
+      if (key === "contacts" || key === "taskRel" || key === "eventRel" || key === "campaigns") renderContacts();
+      if (key === "tasks" || key === "eventRel" || key === "campaigns") renderTimeline();
       if (key === "opps") renderSheetOpps();
       renderOutreach();
     }));
@@ -987,9 +1196,21 @@ a.resource .arrow { color: var(--rail-teal); }
   function outreachPrompt() {
     const a = sheet.account || {};
     const contacts = (sheet.contacts || []).slice().sort((x, y) => Number(pins.has(y.Id)) - Number(pins.has(x.Id))).slice(0, 25)
-      .map((c) => `- ${c.Name}${c.Title ? `, ${clip(c.Title, 90)}` : ""}${pins.has(c.Id) ? " [PRIMARY]" : ""}${c.Email ? "" : " (no email)"}`);
-    const tasks = (sheet.tasks || []).slice(0, 15)
+      .map((c) => `- ${c.Name}${c.Title ? `, ${clip(c.Title, 90)}` : ""}${pins.has(c.Id) ? " [PRIMARY]" : ""}${c.Email ? "" : " (no email)"}${covNote(c)}`);
+    const tasks = (sheet.tasks || []).filter((t) => !isCampaign(t.Subject)).slice(0, 15)
       .map((t) => `- ${effDate(t)} · ${t.IsClosed ? "done" : "open"} · ${clip(t.Subject, 110)}${t.Who && t.Who.Name ? ` · with ${t.Who.Name}` : ""}`);
+    const cov = sheet.taskRel && sheet.eventRel ? coverageByContact() : null;
+    const covNote = (c) => {
+      if (!cov) return "";
+      const v = cov.get(c.Id);
+      if (!v) return " · never contacted";
+      const bits = [];
+      if (v.nextMeeting) bits.push(`meeting ${v.nextMeeting}`);
+      if (v.meetings) bits.push(`met ${v.meetings}x`);
+      if (v.personal) bits.push(`${v.personal} 1:1 touches, last ${v.lastPersonal}`);
+      if (!v.personal && !v.meetings && !v.nextMeeting && v.campaign) bits.push("campaign emails only");
+      return bits.length ? " · " + bits.join(", ") : "";
+    };
     const opps = (sheet.opps || []).map((o) => `- ${clip(o.Name, 90)} · ${o.StageName || "no stage"} · close ${o.CloseDate || "n/a"}${o.NextStep ? ` · next step: ${clip(o.NextStep, 240)}` : ""}`);
     return [
       "You help a salesperson at Otoma plan their next outreach to one account.",
@@ -1013,7 +1234,7 @@ a.resource .arrow { color: var(--rail-teal); }
       `Relationship summary: ${clip(htmlToText(a.Account_Relationship_Summary__c || ""), 2500) || "(none)"}`,
       `Strategic notes: ${clip(htmlToText(a.Account_Strategic_Notes__c || ""), 2500) || "(none)"}`,
       "Open opportunities:", ...(opps.length ? opps : ["- none"]),
-      "Recent activity (newest first):", ...(tasks.length ? tasks : ["- none logged"]),
+      "Recent 1:1 activity, campaign sends excluded (newest first):", ...(tasks.length ? tasks : ["- none logged"]),
       "Contacts:", ...(contacts.length ? contacts : ["- none on record"]),
     ].join("\n");
   }
@@ -1092,7 +1313,8 @@ a.resource .arrow { color: var(--rail-teal); }
       mount(el, h("p", { class: "empty" }, "Outreach drafting needs Claude, which isn’t available in this view. Open the page in claude.ai or the Claude app."));
       return;
     }
-    const ready = !!sheet.account && sheet.contacts !== null && sheet.tasks !== null && sheet.opps !== null;
+    const ready = !!sheet.account && sheet.contacts !== null && sheet.tasks !== null && sheet.opps !== null
+      && (sheet.taskRel !== null || !!sheet.errors.taskRel) && (sheet.eventRel !== null || !!sheet.errors.eventRel);
     const busy = outreach.status === "thinking" || outreach.status === "streaming";
     const actions = h("div", { class: "outreach-actions" },
       !busy && h("button", { type: "button", class: "btn", disabled: !ready || !sample, onclick: () => draftOutreach(outreach.status === "done") },
@@ -1145,37 +1367,113 @@ a.resource .arrow { color: var(--rail-teal); }
   let pinError = null;
   let pinWrite = Promise.resolve();
 
+  // Contact coverage: who we've reached 1:1 or met, who only got campaigns, who's untouched
+  let coverageFilter = "all"; // all | reached | campaign | never
+  function seniority(title) {
+    const t = String(title || "");
+    if (/\b(chief|ceo|cfo|coo|cto|cio|cro|cdo|president|founder|chair|partner)\b/i.test(t)) return 0;
+    if (/\b(evp|svp|managing director|md|general manager|global head|group head)\b/i.test(t)) return 1;
+    if (/\b(head of|head,|vp|vice president)\b|^head\b/i.test(t)) return 2;
+    if (/\bdirector\b/i.test(t)) return 3;
+    return 4;
+  }
+
+  function coverageByContact() {
+    const cov = new Map();
+    const get = (id) => { let c = cov.get(id); if (!c) { c = { personal: 0, lastPersonal: null, campaign: 0, meetings: 0, lastMeeting: null, nextMeeting: null }; cov.set(id, c); } return c; };
+    const today = localDay(new Date());
+    for (const r of sheet.taskRel || []) {
+      if (!r.Task || !isSfId(r.RelationId)) continue;
+      const d = r.Task.ActivityDate;
+      if (d && d > today) continue; // future tasks aren't touches yet
+      const c = get(r.RelationId);
+      if (isCampaign(r.Task.Subject)) c.campaign++;
+      else { c.personal++; if (d && (!c.lastPersonal || d > c.lastPersonal)) c.lastPersonal = d; }
+    }
+    for (const r of sheet.eventRel || []) {
+      if (!r.Event || !r.Relation || r.Relation.Type !== "Contact") continue;
+      if (/cancel+ed/i.test(r.Event.Subject || "")) continue;
+      const c = get(r.RelationId);
+      const d = r.Event.IsAllDayEvent ? r.Event.StartDateTime.slice(0, 10) : localDay(parseSfDateTime(r.Event.StartDateTime));
+      const upcoming = r.Event.IsAllDayEvent ? d > today : parseSfDateTime(r.Event.StartDateTime).getTime() > Date.now();
+      if (upcoming) { if (!c.nextMeeting || d < c.nextMeeting) c.nextMeeting = d; }
+      else { c.meetings++; if (!c.lastMeeting || d > c.lastMeeting) c.lastMeeting = d; }
+    }
+    return cov;
+  }
+
   function renderContacts() {
     const el = document.getElementById("contacts");
     const meta = document.getElementById("contacts-meta");
     if (!el || !sheet) return;
     if (sheet.errors.contacts) { mount(el, errorView(sheet.errors.contacts)); return; }
-    if (!sheet.contacts) { mount(el, h("div", { class: "contacts" }, [0, 1, 2].map(() => h("div", { class: "skeleton", style: "height:96px" })))); return; }
+    if (!sheet.contacts) { mount(el, h("div", { class: "contacts" }, [0, 1, 2].map(() => h("div", { class: "skeleton", style: "height:110px" })))); return; }
     const list = sheet.contacts;
     const primaryCount = list.filter((c) => pins.has(c.Id)).length;
     if (meta) meta.textContent = `${list.length} total${primaryCount ? ` · ${primaryCount} primary` : ""}`;
     if (!list.length) { mount(el, h("p", { class: "empty" }, "No contacts on this account in Salesforce yet.")); return; }
+
+    const covReady = sheet.taskRel !== null && sheet.eventRel !== null;
+    const covFailed = sheet.errors.taskRel || sheet.errors.eventRel;
+    const cov = covReady ? coverageByContact() : new Map();
+    const status = (c) => {
+      const v = cov.get(c.Id);
+      if (!v) return "never";
+      if (v.personal || v.meetings || v.nextMeeting) return "reached";
+      return v.campaign ? "campaign" : "never";
+    };
+    const lastTouch = (c) => { const v = cov.get(c.Id); return v ? [v.lastPersonal, v.lastMeeting].filter(Boolean).sort().pop() || "" : ""; };
+    const counts = { reached: 0, campaign: 0, never: 0 };
+    if (covReady) for (const c of list) counts[status(c)]++;
+
+    const shown = list
+      .filter((c) => !covReady || coverageFilter === "all" || status(c) === coverageFilter)
+      .sort((x, y) => Number(pins.has(y.Id)) - Number(pins.has(x.Id))
+        || seniority(x.Title) - seniority(y.Title)
+        || lastTouch(y).localeCompare(lastTouch(x)));
+
+    const chip = (key, label, n) => h("button", { type: "button", class: "cov-chip" + (coverageFilter === key ? " on" : "") + (key === "never" && n ? " warn" : ""),
+      "aria-pressed": String(coverageFilter === key), onclick: () => { coverageFilter = key; renderContacts(); } }, h("strong", { class: "num" }, n), " ", label);
+
+    const summary = covReady ? h("div", { class: "cov-summary" },
+      chip("all", "all", list.length),
+      chip("reached", "reached 1:1 or met", counts.reached),
+      chip("campaign", "campaign emails only", counts.campaign),
+      chip("never", "never contacted", counts.never))
+      : h("p", { class: "hint", style: "margin:0 0 10px" }, covFailed ? "Couldn’t load contact history, so coverage isn’t shown." : "Loading contact history…");
+
     const canPin = !!db;
-    const sorted = [...list].sort((x, y) => Number(pins.has(y.Id)) - Number(pins.has(x.Id)));
     mount(el,
-      h("div", { class: "contacts" }, sorted.map((c) => {
+      summary,
+      shown.length ? h("div", { class: "contacts" }, shown.map((c) => {
         const primary = pins.has(c.Id);
+        const v = cov.get(c.Id);
+        const st = covReady ? status(c) : null;
+        const lines = [];
+        if (v && v.nextMeeting) lines.push(h("span", { class: "cov-next" }, `Meeting ${fmtDate(v.nextMeeting)} (${relDays(v.nextMeeting)})`));
+        if (v && v.meetings) lines.push(`Met ${v.meetings}× · last ${relDays(v.lastMeeting)}`);
+        if (v && v.personal) lines.push(`${v.personal} 1:1 ${v.personal === 1 ? "touch" : "touches"} · last ${v.lastPersonal ? relDays(v.lastPersonal) : "—"}`);
+        if (v && v.campaign) lines.push(`${v.campaign} campaign ${v.campaign === 1 ? "email" : "emails"}`);
         return h("article", { class: "contact" + (primary ? " primary" : "") },
-          primary && h("div", { class: "primary-label" }, "Primary"),
+          (primary || st === "never" || st === "campaign") && h("div", { class: "card-flags" },
+            primary && h("span", { class: "primary-label" }, "Primary"),
+            st === "never" && h("span", { class: "cov-flag" }, "Never contacted"),
+            st === "campaign" && h("span", { class: "cov-flag soft" }, "Campaign only")),
           h("div", { class: "cname" }, c.Name),
           h("div", { class: "ctitle" }, c.Title || "No title on record"),
           h("div", { class: "links" },
             c.Email ? h("a", { href: "mailto:" + c.Email, title: "Email " + c.Email }, c.Email) : h("span", { class: "missing" }, "No email"),
             c.Phone && h("span", { style: "user-select:all" }, c.Phone)),
+          lines.length > 0 && h("div", { class: "cov-lines" }, lines.map((l) => h("div", {}, l))),
           h("button", {
             type: "button", class: "pin", "aria-pressed": String(primary), disabled: !canPin,
             title: canPin ? (primary ? "Unmark as primary" : "Mark as primary") : "Pinning needs this page’s shared storage, which isn’t available in this view",
             "aria-label": `${primary ? "Unmark" : "Mark"} ${c.Name} as primary contact`,
             onclick: () => togglePin(c.Id),
           }, primary ? "★" : "☆"));
-      })),
+      })) : h("p", { class: "empty" }, "No contacts in this group."),
       pinError && h("p", { class: "error-inline" }, pinError),
-      h("p", { class: "hint" }, "★ pins are saved with this page and shared with anyone you share it with. They don’t change Salesforce."));
+      h("p", { class: "hint" }, "Sorted by ★ primary, then seniority, then most recent touch. Campaign means the same email subject went to " + CAMPAIGN_MIN_ACCOUNTS + "+ accounts. ★ pins are saved with this page and don’t change Salesforce."));
   }
 
   function togglePin(contactId) {
@@ -1199,45 +1497,93 @@ a.resource .arrow { color: var(--rail-teal); }
   function effDate(t) { return t.ActivityDate || localDay(parseSfDateTime(t.CreatedDate)); }
   function isOverdue(t) { return !t.IsClosed && dayDiff(effDate(t)) < 0; }
 
+  let showCampaignTasks = false;
+
   function renderTimeline() {
     const el = document.getElementById("timeline");
     const meta = document.getElementById("tasks-meta");
     if (!el || !sheet) return;
     if (sheet.errors.tasks) { mount(el, errorView(sheet.errors.tasks)); return; }
     if (!sheet.tasks) { mount(el, [0, 1, 2, 3].map(() => h("div", { class: "skeleton", style: "height:44px;margin-bottom:12px" }))); return; }
-    const tasks = sheet.tasks;
-    if (meta) meta.textContent = `${tasks.length}${tasks.length === 200 ? "+" : ""} ${tasks.length === 1 ? "task" : "tasks"}`;
+    // Meetings from the synced calendar join the timeline alongside tasks.
+    const meetingsById = new Map();
+    for (const r of sheet.eventRel || []) {
+      if (!r.Event || meetingsById.has(r.EventId)) continue;
+      const start = r.Event.StartDateTime;
+      meetingsById.set(r.EventId, {
+        kind: "meeting", Id: r.EventId, Subject: cleanEventTitle(r.Event.Subject),
+        ActivityDate: r.Event.IsAllDayEvent ? start.slice(0, 10) : localDay(parseSfDateTime(start)),
+        CreatedDate: start, IsClosed: true, cancelled: /cancel+ed/i.test(r.Event.Subject || ""),
+        time: r.Event.IsAllDayEvent ? "All day" : timeOf(start), where: whereLabel(r.Event.Location),
+        people: [],
+      });
+    }
+    for (const r of sheet.eventRel || []) {
+      const m = meetingsById.get(r.EventId);
+      if (m && r.Relation && r.Relation.Type === "Contact") {
+        const c = (sheet.contacts || []).find((x) => x.Id === r.RelationId);
+        if (c) m.people.push(c.Name);
+      }
+    }
+    const meetings = [...meetingsById.values()].filter((m) => !m.cancelled);
+    const allTasks = sheet.tasks.map((t) => ({ ...t, kind: isCampaign(t.Subject) ? "campaign" : "task" }));
+    const campaignCount = allTasks.filter((t) => t.kind === "campaign").length;
+    const items = [...allTasks.filter((t) => showCampaignTasks || t.kind !== "campaign"), ...meetings];
+    const personal = [...allTasks.filter((t) => t.kind === "task"), ...meetings];
+    if (meta) meta.textContent = `${allTasks.length - campaignCount} tasks · ${meetings.length} meetings${campaignCount ? ` · ${campaignCount} campaign` : ""}`;
 
-    const sorted = [...tasks].sort((a, b) => effDate(b).localeCompare(effDate(a)) || String(b.CreatedDate).localeCompare(String(a.CreatedDate)));
+    const sorted = items.sort((a, b) => effDate(b).localeCompare(effDate(a)) || String(b.CreatedDate).localeCompare(String(a.CreatedDate)));
     const past = sorted.filter((t) => dayDiff(effDate(t)) <= 0);
     const upcoming = sorted.filter((t) => dayDiff(effDate(t)) > 0).reverse();
 
+    // Callouts count 1:1 touches and meetings only, never campaign sends.
+    const pastPersonal = personal.filter((t) => dayDiff(effDate(t)) <= 0
+      && !(t.kind === "meeting" && t.time !== "All day" && parseSfDateTime(t.CreatedDate).getTime() > Date.now()));
     let density = null;
     for (const w of DENSE_WINDOWS) {
-      const count = past.filter((t) => -dayDiff(effDate(t)) < w.days).length;
+      const count = pastPersonal.filter((t) => -dayDiff(effDate(t)) < w.days).length;
       if (count >= w.min) { density = { count, days: w.days }; break; }
     }
-    const daysSince = past[0] ? -dayDiff(effDate(past[0])) : null;
+    const lastPersonal = pastPersonal.map(effDate).sort().pop();
+    const daysSince = lastPersonal ? -dayDiff(lastPersonal) : null;
     const stale = daysSince === null || daysSince > STALE_AFTER_DAYS;
-    const overdue = sorted.filter(isOverdue).length;
+    const overdue = allTasks.filter(isOverdue).length;
+    const nextMeeting = meetings.filter((m) => dayDiff(m.ActivityDate) >= 0 && parseSfDateTime(m.CreatedDate).getTime() > Date.now() - 3600e3)
+      .sort((a, b) => String(a.CreatedDate).localeCompare(String(b.CreatedDate)))[0];
 
     const callouts = h("div", { class: "callouts" },
-      density && h("span", { class: "callout" }, h("strong", { class: "num" }, density.count), ` touches in the last ${density.days} days`),
-      stale && h("span", { class: "callout rust" }, daysSince === null ? "No logged touches yet" : `No touches in ${daysSince} days`),
+      nextMeeting && h("span", { class: "callout" }, "Next meeting ", h("strong", {}, dayDiff(nextMeeting.ActivityDate) === 0 ? "today" : relDays(nextMeeting.ActivityDate)), ` · ${clip(nextMeeting.Subject, 60)}`),
+      density && h("span", { class: "callout" }, h("strong", { class: "num" }, density.count), ` 1:1 touches in the last ${density.days} days`),
+      stale && h("span", { class: "callout rust" }, daysSince === null ? "No 1:1 touches logged yet" : `No 1:1 touch in ${daysSince} days`),
       overdue > 0 && h("span", { class: "callout rust" }, h("strong", { class: "num" }, overdue), overdue === 1 ? " overdue task" : " overdue tasks"));
 
-    if (!tasks.length) { mount(el, callouts, h("p", { class: "empty" }, "No tasks logged against this account in Salesforce.")); return; }
+    const toggle = campaignCount > 0 && h("button", { type: "button", class: "small-link", style: "margin:0 0 12px", onclick: () => { showCampaignTasks = !showCampaignTasks; renderTimeline(); } },
+      showCampaignTasks ? "Hide campaign emails" : `Show ${campaignCount} campaign ${campaignCount === 1 ? "email" : "emails"}`);
+
+    if (!items.length) {
+      mount(el, callouts, toggle, h("p", { class: "empty" }, campaignCount ? "Only campaign emails are logged for this account." : "No tasks or meetings logged for this account in Salesforce."));
+      return;
+    }
 
     const item = (t, isUpcoming) => {
-      const od = isOverdue(t);
-      const state = od ? "overdue" : isUpcoming ? "upcoming" : t.IsClosed ? "done" : "open";
       const d = effDate(t);
+      if (t.kind === "meeting") {
+        return h("li", { class: "tl-item meeting" + (isUpcoming ? " upcoming" : "") },
+          h("div", { class: "tl-date num" }, h("span", {}, fmtDate(d)), h("span", {}, relDays(d)), h("span", {}, t.time)),
+          h("div", { class: "tl-subject" }, t.Subject),
+          h("div", { class: "tl-meta" }, h("span", { class: "s-open" }, "Meeting"),
+            t.people.length > 0 && h("span", {}, "with " + t.people.slice(0, 4).join(", ") + (t.people.length > 4 ? ` +${t.people.length - 4}` : "")),
+            t.where && h("span", {}, t.where)));
+      }
+      const od = isOverdue(t);
+      const state = t.kind === "campaign" ? "campaign" : od ? "overdue" : isUpcoming ? "upcoming" : t.IsClosed ? "done" : "open";
       return h("li", { class: "tl-item " + state },
         h("div", { class: "tl-date num" },
           h("span", {}, fmtDate(d)), h("span", {}, relDays(d)),
           !t.ActivityDate && h("span", { title: "No due date; showing created date" }, "(created)")),
         h("div", { class: "tl-subject" }, t.Subject || "(no subject)"),
         h("div", { class: "tl-meta" },
+          t.kind === "campaign" && h("span", { class: "tag-campaign" }, "Campaign"),
           h("span", { class: od ? "s-overdue" : !t.IsClosed ? "s-open" : "" }, od ? `Overdue · ${t.Status || "Open"}` : (t.Status || "—")),
           t.TaskSubtype && t.TaskSubtype !== "Task" && h("span", {}, t.TaskSubtype),
           t.Who && t.Who.Name && h("span", {}, "with " + t.Who.Name),
@@ -1245,13 +1591,13 @@ a.resource .arrow { color: var(--rail-teal); }
     };
 
     const visible = showAllTimeline ? past : past.slice(0, TIMELINE_VISIBLE);
-    mount(el, callouts,
+    mount(el, callouts, toggle,
       h("ol", { class: "timeline" },
         upcoming.length > 0 && [h("li", { class: "tl-divider" }, "Upcoming"), upcoming.map((t) => item(t, true)), h("li", { class: "tl-divider" }, "History")],
         visible.map((t) => item(t, false)),
         past.length > visible.length && h("li", {},
           h("button", { type: "button", class: "show-more", onclick: () => { showAllTimeline = true; renderTimeline(); } },
-            `Show ${past.length - visible.length} older ${past.length - visible.length === 1 ? "activity" : "activities"}`))));
+            `Show ${past.length - visible.length} older ${past.length - visible.length === 1 ? "item" : "items"}`))));
   }
 
   // Quick Access resources: account links + defaults for the Type + defaults for all accounts
