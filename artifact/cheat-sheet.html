@@ -181,7 +181,69 @@ a.resource .arrow { color: var(--rail-teal); }
 .news-link .nl-sub { font-size: 12px; color: var(--muted); }
 .news-link .arrow { color: var(--teal); }
 
-@media (max-width: 1100px) { .split { grid-template-columns: minmax(0, 1fr); gap: 10px; } }
+
+/* Home dashboard */
+.landing { max-width: 1240px; }
+.dash-head { display: flex; justify-content: flex-end; align-items: center; gap: 12px; margin: -4px 0 12px; }
+.dash-head .meta { font-size: 12px; color: var(--muted); }
+.dash { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 36px; align-items: start; }
+.dash-side { display: flex; flex-direction: column; }
+.acct-link { font-weight: 600; text-decoration: none; color: var(--text); }
+.acct-link:hover { color: var(--teal-strong); text-decoration: underline; }
+.stage-strip { display: flex; flex-wrap: wrap; gap: 6px; margin: -4px 0 14px; }
+.stage-strip:empty { display: none; }
+.stage-chip { font-size: 12px; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--line-strong); color: var(--muted); }
+.stage-chip strong { color: var(--text); font-weight: 600; }
+.stage-chip.teal { background: var(--teal-soft); border-color: var(--teal-line); color: var(--teal-strong); }
+.stage-chip.teal strong { color: var(--teal-strong); }
+.opp-list, .due-list, .recent-list { list-style: none; margin: 0; padding: 0; }
+.opp { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 16px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.opp:first-child { padding-top: 0; }
+.opp-acct { font-size: 15px; }
+.opp-name { color: var(--muted); font-size: 13px; overflow-wrap: anywhere; }
+.opp-next { font-size: 13px; margin-top: 4px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.opp-next-label { color: var(--faint); font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; }
+.opp-side { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; text-align: right; }
+.opp-close { font-size: 12px; color: var(--muted); }
+.opp-close.soon { color: var(--teal-strong); font-weight: 500; }
+.opp-close.late { color: var(--rust); font-weight: 500; }
+.due-group + .due-group { margin-top: 14px; }
+.due-label { font: 600 11px/1.2 var(--sans); text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 6px; }
+.due-label.rust { color: var(--rust); }
+.due { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--line); }
+.due-date { font-size: 12px; color: var(--muted); padding-top: 1px; }
+.due.overdue .due-date { color: var(--rust); font-weight: 600; }
+.due-body { display: flex; flex-direction: column; min-width: 0; }
+.due-subject { font-weight: 500; overflow-wrap: anywhere; }
+.due-meta { font-size: 12px; color: var(--muted); }
+.due-meta .acct-link { font-weight: 500; color: var(--muted); }
+.recent { padding: 8px 0; border-bottom: 1px solid var(--line); }
+.recent-top { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.recent-count { font-size: 12px; color: var(--muted); white-space: nowrap; }
+.recent-count.dense { color: var(--teal-strong); font-weight: 600; }
+.recent-sub { font-size: 12px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Cheat sheet: opportunities + outreach */
+.sheet-opps { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.sheet-opp { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; padding: 10px 14px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); }
+.outreach-box { border: 1px solid var(--teal-line); border-radius: var(--radius); background: var(--card); padding: 16px 18px; }
+.outreach-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.btn { font: 600 13px var(--sans); border-radius: 4px; padding: 8px 14px; cursor: pointer; border: 1px solid var(--teal); background: var(--teal); color: var(--card); }
+.btn:disabled { opacity: 0.5; cursor: default; }
+.btn.ghost { background: transparent; color: var(--teal-strong); }
+.outreach-stream { white-space: pre-wrap; font-size: 14px; line-height: 1.6; color: var(--text); margin-top: 12px; }
+.outreach-thinking { color: var(--muted); font-size: 13px; margin-top: 12px; }
+.outreach-sections { display: grid; gap: 16px; margin-top: 14px; }
+.outreach-sections h3 { font: 600 11px/1.2 var(--sans); text-transform: uppercase; letter-spacing: 0.08em; color: var(--teal-strong); margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.email-draft { font-size: 14px; line-height: 1.6; white-space: pre-wrap; background: var(--paper); border: 1px solid var(--line); border-radius: 4px; padding: 12px 14px; max-width: 72ch; }
+.copy-btn { font: 500 12px var(--sans); text-transform: none; letter-spacing: 0; background: none; border: 1px solid var(--line-strong); border-radius: 999px; padding: 3px 10px; color: var(--muted); cursor: pointer; }
+.copy-btn:hover { color: var(--text); }
+.context-edit { display: grid; gap: 6px; margin-top: 12px; }
+.context-edit textarea { width: 100%; min-height: 70px; font: 13px/1.5 var(--sans); color: var(--text); background: var(--paper); border: 1px solid var(--line-strong); border-radius: 4px; padding: 8px 10px; resize: vertical; }
+.small-link { background: none; border: 0; padding: 0; font-size: 12px; color: var(--teal-strong); cursor: pointer; }
+.small-link:hover { text-decoration: underline; }
+
+@media (max-width: 1100px) { .dash { grid-template-columns: minmax(0, 1fr); gap: 10px; } .split { grid-template-columns: minmax(0, 1fr); gap: 10px; } }
 @media (max-width: 860px) {
   .sheet { grid-template-columns: minmax(0, 1fr); background: none; }
   .rail { position: static; max-height: none; padding: 14px 16px 16px; gap: 12px; }
@@ -416,8 +478,9 @@ a.resource .arrow { color: var(--rail-teal); }
     route = m ? { view: "sheet", id: m[1] } : { view: "search" };
   }
   function go(id) {
-    if (id) location.hash = "a-" + id;
-    else history.pushState(null, "", location.pathname + location.search);
+    const target = id ? "#a-" + id : "";
+    if (id && location.hash !== target) { location.hash = target; window.scrollTo(0, 0); return; } // hashchange renders
+    if (!id) history.pushState(null, "", location.pathname + location.search);
     readHash();
     render();
     window.scrollTo(0, 0);
@@ -433,11 +496,12 @@ a.resource .arrow { color: var(--rail-teal); }
   function renderSearch() {
     const input = h("input", {
       id: "account-search", type: "search", autocomplete: "off", spellcheck: "false",
-      placeholder: "Company name…", value: query,
+      placeholder: "Search any account by company name…", value: query,
       oninput: (e) => {
         query = e.target.value;
+        showHomeMode();
         clearTimeout(searchTimer);
-        searchTimer = setTimeout(runSearch, 350);
+        if (query.trim()) searchTimer = setTimeout(runSearch, 350);
       },
     });
     const app = document.getElementById("app");
@@ -448,19 +512,174 @@ a.resource .arrow { color: var(--rail-teal); }
           themeButton(true))),
       h("main", { class: "landing" },
         h("h1", {}, "Who are you calling?"),
-        h("form", { class: "search", role: "search", onsubmit: (e) => { e.preventDefault(); clearTimeout(searchTimer); runSearch(); } },
+        h("form", { class: "search", role: "search", onsubmit: (e) => { e.preventDefault(); clearTimeout(searchTimer); if (query.trim()) runSearch(); } },
           h("label", { for: "account-search", class: "sr-only" }, "Search accounts"),
           svgSearch(),
           input,
           h("span", { class: "pending", id: "search-pending", hidden: true }, "Searching…")),
-        h("div", { class: "results-head" },
-          h("span", { class: "eyebrow", id: "results-label" }, ""),
-          h("button", { type: "button", class: "pill-btn", onclick: () => runSearch(true) }, "Refresh")),
-        h("div", { id: "results" }, skeletonRows())));
+        h("div", { id: "search-area", hidden: true },
+          h("div", { class: "results-head" },
+            h("span", { class: "eyebrow", id: "results-label" }, ""),
+            h("button", { type: "button", class: "pill-btn", onclick: () => runSearch(true) }, "Refresh")),
+          h("div", { id: "results" }, skeletonRows())),
+        h("div", { id: "dashboard" },
+          h("div", { class: "dash-head" },
+            h("span", { class: "meta", id: "dash-loaded" }, "Loading from Salesforce…"),
+            h("button", { type: "button", class: "pill-btn", onclick: () => loadDashboard(true) }, "Refresh")),
+          h("div", { class: "dash" },
+            h("section", { class: "panel dash-opps" },
+              h("div", { class: "panel-head" }, h("h2", {}, "Open opportunities"), h("span", { class: "meta num", id: "opps-meta" })),
+              h("div", { id: "stage-strip", class: "stage-strip" }),
+              h("div", { id: "dash-opps" }, skeletonRows())),
+            h("div", { class: "dash-side" },
+              h("section", { class: "panel" },
+                h("div", { class: "panel-head" }, h("h2", {}, "Due in the next 2 weeks"), h("span", { class: "meta num", id: "due-meta" })),
+                h("div", { id: "dash-tasks" }, skeletonRows())),
+              h("section", { class: "panel" },
+                h("div", { class: "panel-head" }, h("h2", {}, "Recently engaged"), h("span", { class: "meta" }, "last 14 days")),
+                h("div", { id: "dash-recent" }, skeletonRows())))))));
+    showHomeMode();
     input.focus();
     const len = input.value.length;
     input.setSelectionRange(len, len);
-    runSearch();
+    if (query.trim()) runSearch();
+    loadDashboard(false);
+  }
+
+  function showHomeMode() {
+    const searching = !!query.trim();
+    const area = document.getElementById("search-area");
+    const dash = document.getElementById("dashboard");
+    if (area) area.hidden = !searching;
+    if (dash) dash.hidden = searching;
+  }
+
+  const openAccount = (id) => (e) => { e.preventDefault(); go(id); };
+  const accountLink = (id, name, cls) => isSfId(id)
+    ? h("a", { href: "#a-" + id, class: cls || "acct-link", onclick: openAccount(id) }, name || "Unnamed account")
+    : h("span", { class: cls || "" }, name || "—");
+
+  // ── Home dashboard ─────────────────────────────────────────────────────
+  let dashSeq = 0;
+  async function loadDashboard(fresh) {
+    if (route.view !== "search") return;
+    if (!mcp) {
+      if (mcpState === "absent") ["dash-opps", "dash-tasks", "dash-recent"].forEach((id) => mount(document.getElementById(id), errorView({ code: "not_granted" })));
+      return;
+    }
+    const seq = ++dashSeq;
+    const current = () => seq === dashSeq && route.view === "search";
+    const loaded = document.getElementById("dash-loaded");
+    if (loaded && fresh) loaded.textContent = "Refreshing from Salesforce…";
+    const jobs = [
+      ["dash-opps", soql(
+        "SELECT Id, Name, StageName, Amount, CloseDate, NextStep, LastActivityDate, AccountId, Account.Name, Owner.Name " +
+        "FROM Opportunity WHERE IsClosed = false ORDER BY CloseDate ASC NULLS LAST LIMIT 200", { fresh }), renderDashOpps],
+      ["dash-tasks", soql(
+        "SELECT Id, Subject, ActivityDate, Status, Priority, TaskSubtype, AccountId, Account.Name, What.Name, Who.Name, Owner.Name " +
+        "FROM Task WHERE IsClosed = false AND ActivityDate <= NEXT_N_DAYS:14 ORDER BY ActivityDate ASC LIMIT 200", { fresh }), renderDashTasks],
+      ["dash-recent", soql(
+        "SELECT Id, Subject, ActivityDate, TaskSubtype, AccountId, Account.Name, Who.Name " +
+        "FROM Task WHERE IsClosed = true AND ActivityDate = LAST_N_DAYS:14 AND AccountId != null ORDER BY ActivityDate DESC LIMIT 500", { fresh }), renderDashRecent],
+    ];
+    await Promise.all(jobs.map(async ([id, p, fn]) => {
+      try {
+        const rows = await p;
+        if (current()) fn(rows);
+      } catch (err) {
+        if (current()) mount(document.getElementById(id), errorView(err));
+      }
+    }));
+    if (!current()) return;
+    const el = document.getElementById("dash-loaded");
+    if (el) mount(el, h("span", { class: "live-dot", "aria-hidden": "true" }), "Live from Salesforce · loaded ",
+      new Date().toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" }));
+  }
+
+  function stageNum(stage) { const m = String(stage || "").match(/^(\d+)/); return m ? Number(m[1]) : 0; }
+  function stageTone(stage) { const n = stageNum(stage); return n >= 3 ? "teal" : ""; }
+
+  function renderDashOpps(opps) {
+    const el = document.getElementById("dash-opps");
+    const meta = document.getElementById("opps-meta");
+    const strip = document.getElementById("stage-strip");
+    if (!el) return;
+    if (meta) meta.textContent = `${opps.length}${opps.length === 200 ? "+" : ""} open`;
+    const byStage = new Map();
+    for (const o of opps) byStage.set(o.StageName || "No stage", (byStage.get(o.StageName || "No stage") || 0) + 1);
+    const stages = [...byStage.entries()].sort((a, b) => stageNum(a[0]) - stageNum(b[0]));
+    mount(strip, stages.map(([name, n]) => h("span", { class: "stage-chip " + stageTone(name) }, h("strong", { class: "num" }, n), " ", name.replace(/^\d+\.\s*/, ""))));
+    if (!opps.length) { mount(el, h("p", { class: "empty" }, "No open opportunities in Salesforce.")); return; }
+    const money = (v) => v == null ? null : Number(v).toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
+    mount(el, h("ul", { class: "opp-list" }, opps.map((o) => {
+      const close = o.CloseDate;
+      const late = close && dayDiff(close) < 0;
+      const soon = close && !late && dayDiff(close) <= 14;
+      return h("li", { class: "opp" },
+        h("div", { class: "opp-main" },
+          h("div", { class: "opp-acct" }, accountLink(o.AccountId, o.Account && o.Account.Name)),
+          h("div", { class: "opp-name" }, o.Name, money(o.Amount) && h("span", { class: "opp-amt num" }, " · " + money(o.Amount))),
+          o.NextStep && h("div", { class: "opp-next" }, h("span", { class: "opp-next-label" }, "Next step "), o.NextStep)),
+        h("div", { class: "opp-side" },
+          h("span", { class: "badge " + stageTone(o.StageName) }, o.StageName || "No stage"),
+          h("span", { class: "opp-close num" + (late ? " late" : soon ? " soon" : "") },
+            close ? (late ? `Close date passed · ${fmtDate(close)}` : `Closes ${fmtDate(close)} (${relDays(close)})`) : "No close date")));
+    })));
+  }
+
+  function renderDashTasks(tasks) {
+    const el = document.getElementById("dash-tasks");
+    const meta = document.getElementById("due-meta");
+    if (!el) return;
+    const overdue = tasks.filter((t) => t.ActivityDate && dayDiff(t.ActivityDate) < 0);
+    if (meta) meta.textContent = `${tasks.length} open${overdue.length ? ` · ${overdue.length} overdue` : ""}`;
+    if (!tasks.length) { mount(el, h("p", { class: "empty" }, "Nothing due in the next two weeks.")); return; }
+    const groups = [
+      ["Overdue", (d) => d < 0],
+      ["Today", (d) => d === 0],
+      ["Next 7 days", (d) => d > 0 && d <= 7],
+      ["Days 8–14", (d) => d > 7],
+    ];
+    mount(el, groups.map(([label, test]) => {
+      const items = tasks.filter((t) => t.ActivityDate && test(dayDiff(t.ActivityDate)));
+      if (!items.length) return null;
+      return h("div", { class: "due-group" },
+        h("div", { class: "due-label" + (label === "Overdue" ? " rust" : "") }, `${label} · ${items.length}`),
+        h("ul", { class: "due-list" }, items.map((t) => {
+          const d = dayDiff(t.ActivityDate);
+          const acct = t.Account && t.Account.Name ? t.Account.Name : t.What && t.What.Name;
+          return h("li", { class: "due" + (d < 0 ? " overdue" : "") },
+            h("span", { class: "due-date num" }, d < 0 ? `${-d}d late` : relDays(t.ActivityDate)),
+            h("span", { class: "due-body" },
+              h("span", { class: "due-subject" }, t.Subject || "(no subject)", t.Priority === "High" && h("span", { class: "badge rust", style: "margin-left:6px" }, "High")),
+              h("span", { class: "due-meta" },
+                acct && accountLink(t.AccountId, acct),
+                t.Who && t.Who.Name && h("span", {}, (acct ? " · " : "") + t.Who.Name),
+                t.Status && h("span", {}, " · " + t.Status))));
+        })));
+    }));
+  }
+
+  function renderDashRecent(tasks) {
+    const el = document.getElementById("dash-recent");
+    if (!el) return;
+    const byAcct = new Map();
+    for (const t of tasks) {
+      const g = byAcct.get(t.AccountId) || { id: t.AccountId, name: t.Account && t.Account.Name, n: 0, last: null, lastSubject: "", people: new Set() };
+      g.n++;
+      if (!g.last || (t.ActivityDate || "") > g.last) { g.last = t.ActivityDate; g.lastSubject = t.Subject || ""; }
+      if (t.Who && t.Who.Name) g.people.add(t.Who.Name);
+      byAcct.set(t.AccountId, g);
+    }
+    const list = [...byAcct.values()].sort((a, b) => String(b.last).localeCompare(String(a.last)) || b.n - a.n).slice(0, 12);
+    if (!list.length) { mount(el, h("p", { class: "empty" }, "No completed touches logged in the last 14 days.")); return; }
+    mount(el, h("ul", { class: "recent-list" }, list.map((g) => h("li", { class: "recent" },
+      h("div", { class: "recent-top" },
+        accountLink(g.id, g.name),
+        h("span", { class: "recent-count num" + (g.n >= 4 ? " dense" : "") }, `${g.n} ${g.n === 1 ? "touch" : "touches"}`)),
+      h("div", { class: "recent-sub" },
+        g.last ? relDays(g.last) : "", g.lastSubject && ` · ${g.lastSubject.replace(/^Email:\s*/i, "")}`,
+        g.people.size ? ` · ${[...g.people].slice(0, 3).join(", ")}${g.people.size > 3 ? ` +${g.people.size - 3}` : ""}` : "")))));
   }
 
   function svgSearch() {
@@ -484,18 +703,15 @@ a.resource .arrow { color: var(--rail-teal); }
     const t = query.trim().slice(0, 80);
     const pending = document.getElementById("search-pending");
     if (pending) pending.hidden = false;
-    const q = t
-      ? `SELECT ${SUMMARY_FIELDS} FROM Account WHERE Name LIKE '%${soqlLike(t)}%' ORDER BY Name LIMIT 50`
-      : `SELECT ${SUMMARY_FIELDS} FROM Account WHERE LastActivityDate != null ORDER BY LastActivityDate DESC LIMIT 25`;
+    if (!t) { if (pending) pending.hidden = true; return; }
+    const q = `SELECT ${SUMMARY_FIELDS} FROM Account WHERE Name LIKE '%${soqlLike(t)}%' ORDER BY Name LIMIT 50`;
     try {
       const rows = await soql(q, { fresh });
       if (seq !== searchSeq || route.view !== "search") return;
-      document.getElementById("results-label").textContent = t
-        ? `${rows.length}${rows.length === 50 ? "+" : ""} matching “${t}”`
-        : "Recently active";
+      document.getElementById("results-label").textContent = `${rows.length}${rows.length === 50 ? "+" : ""} matching “${t}”`;
       mount(document.getElementById("results"), rows.length
         ? h("ul", { class: "results" }, rows.map(resultRow))
-        : h("p", { class: "empty" }, t ? `No accounts match “${t}”. Try fewer letters or the legal name.` : "No recently active accounts."));
+        : h("p", { class: "empty" }, `No accounts match “${t}”. Try fewer letters or the legal name.`));
     } catch (err) {
       if (seq !== searchSeq) return;
       mount(document.getElementById("results"), errorView(err));
@@ -516,6 +732,9 @@ a.resource .arrow { color: var(--rail-teal); }
         h("span", { class: "cell hide-sm" }, (a.Owner && a.Owner.Name) || "—"),
         h("span", { class: "cell when num hide-sm" + (stale ? " stale" : ""), title: last ? "Last activity " + fmtDate(last) : "No activity logged" }, last ? relDays(last) : "—")));
   }
+
+  const loadedLabel = (d) => [h("span", { class: "live-dot", "aria-hidden": "true" }), "Live from Salesforce · loaded ",
+    d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })];
 
   // ── Cheat sheet view ───────────────────────────────────────────────────
   let sheetSeq = 0;
@@ -550,7 +769,8 @@ a.resource .arrow { color: var(--rail-teal); }
     const id = route.id;
     const fresh = !sheet || sheet.id !== id;
     if (fresh) {
-      sheet = { id, account: null, contacts: null, tasks: null, errors: {}, loadedAt: null };
+      sheet = { id, account: null, contacts: null, tasks: null, opps: null, errors: {}, loadedAt: null };
+      outreach = { status: "idle", text: "", error: null, ctl: null };
       pins = new Set(); ownResources = []; editor = null; drawerOpen = false; showAllTimeline = false;
       subscribeSheetDocs(id);
     }
@@ -571,11 +791,17 @@ a.resource .arrow { color: var(--rail-teal); }
           h("footer", { class: "rail-foot", id: "rail-foot" })),
         h("main", { class: "main" },
           h("div", { class: "main-top" },
-            h("span", { id: "loaded-at" }, "Loading from Salesforce…"),
+            h("span", { id: "loaded-at" }, sheet.loadedAt ? loadedLabel(sheet.loadedAt) : "Loading from Salesforce…"),
             h("button", { type: "button", class: "pill-btn", onclick: () => loadSheet(id, true) }, "Refresh")),
           h("section", { class: "panel" },
             h("div", { class: "panel-head" }, h("h2", {}, "Relationship snapshot")),
             h("div", { id: "snapshot" })),
+          h("section", { class: "panel", id: "opps-panel" },
+            h("div", { class: "panel-head" }, h("h2", {}, "Open opportunities"), h("span", { class: "meta num", id: "sheet-opps-meta" })),
+            h("div", { id: "sheet-opps" })),
+          h("section", { class: "panel" },
+            h("div", { class: "panel-head" }, h("h2", {}, "Suggested outreach"), h("span", { class: "meta" }, "drafted by Claude from this page")),
+            h("div", { id: "outreach" })),
           h("section", { class: "panel" },
             h("div", { class: "panel-head" }, h("h2", {}, "Contacts"), h("span", { class: "meta num", id: "contacts-meta" })),
             h("div", { id: "contacts" })),
@@ -589,6 +815,8 @@ a.resource .arrow { color: var(--rail-teal); }
     renderAccountParts();
     renderContacts();
     renderTimeline();
+    renderSheetOpps();
+    renderOutreach();
     renderResources();
     if (fresh) loadSheet(id, false);
   }
@@ -614,7 +842,10 @@ a.resource .arrow { color: var(--rail-teal); }
         `SELECT Id, Name, Title, Email, Phone FROM Contact WHERE AccountId = '${sid}' ORDER BY LastName ASC NULLS LAST LIMIT 200`, { fresh: freshData }),
       tasks: soql(
         `SELECT Id, Subject, ActivityDate, CreatedDate, Status, IsClosed, TaskSubtype, Who.Name, Owner.Name ` +
-        `FROM Task WHERE WhatId = '${sid}' ORDER BY ActivityDate DESC NULLS LAST, CreatedDate DESC LIMIT 200`, { fresh: freshData }),
+        `FROM Task WHERE AccountId = '${sid}' ORDER BY ActivityDate DESC NULLS LAST, CreatedDate DESC LIMIT 200`, { fresh: freshData }),
+      opps: soql(
+        `SELECT Id, Name, StageName, Amount, CloseDate, NextStep FROM Opportunity ` +
+        `WHERE AccountId = '${sid}' AND IsClosed = false ORDER BY CloseDate ASC NULLS LAST LIMIT 50`, { fresh: freshData }),
     };
     await Promise.all(Object.entries(jobs).map(async ([key, p]) => {
       try {
@@ -629,12 +860,12 @@ a.resource .arrow { color: var(--rail-teal); }
       if (key === "account") renderAccountParts();
       if (key === "contacts") renderContacts();
       if (key === "tasks") renderTimeline();
+      if (key === "opps") renderSheetOpps();
+      renderOutreach();
     }));
     if (!current()) return;
     sheet.loadedAt = new Date();
-    const el = document.getElementById("loaded-at");
-    if (el) mount(el, h("span", { class: "live-dot", "aria-hidden": "true" }), "Live from Salesforce · loaded ",
-      sheet.loadedAt.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" }));
+    mount(document.getElementById("loaded-at"), loadedLabel(sheet.loadedAt));
   }
 
   function renderAccountParts() {
@@ -719,6 +950,195 @@ a.resource .arrow { color: var(--rail-teal); }
     let n = String(accountName).replace(/\(.*?\)/g, "").replace(/,/g, " ").trim();
     for (let i = 0; i < 3; i++) { const next = n.replace(SUFFIX, "").trim(); if (!next) break; n = next; }
     return n.replace(/\s+/g, " ");
+  }
+
+  // Open opportunities on this account
+  function renderSheetOpps() {
+    const el = document.getElementById("sheet-opps");
+    const meta = document.getElementById("sheet-opps-meta");
+    if (!el || !sheet) return;
+    if (sheet.errors.opps) { mount(el, errorView(sheet.errors.opps)); return; }
+    if (!sheet.opps) { mount(el, h("div", { class: "skeleton", style: "height:52px" })); return; }
+    if (meta) meta.textContent = sheet.opps.length ? `${sheet.opps.length} open` : "";
+    if (!sheet.opps.length) { mount(el, h("p", { class: "empty" }, "No open opportunities on this account.")); return; }
+    mount(el, h("ul", { class: "sheet-opps" }, sheet.opps.map((o) => {
+      const late = o.CloseDate && dayDiff(o.CloseDate) < 0;
+      return h("li", { class: "sheet-opp" },
+        h("div", {},
+          h("div", { style: "font-weight:600" }, o.Name),
+          o.NextStep && h("div", { class: "opp-next" }, h("span", { class: "opp-next-label" }, "Next step "), o.NextStep)),
+        h("div", { class: "opp-side" },
+          h("span", { class: "badge " + stageTone(o.StageName) }, o.StageName || "No stage"),
+          h("span", { class: "opp-close num" + (late ? " late" : "") },
+            o.CloseDate ? (late ? `Close date passed · ${fmtDate(o.CloseDate)}` : `Closes ${fmtDate(o.CloseDate)}`) : "No close date")));
+    })));
+  }
+
+  // Suggested outreach, drafted by Claude on the viewer's account
+  let sample = null;
+  let sampleState = "loading";
+  let outreach = { status: "idle", text: "", error: null, ctl: null };
+  const DEFAULT_CONTEXT = "Otoma sells next-generation payments technology to banks. Keep outreach short, specific and peer-to-peer; reference real context from the notes.";
+  let outreachContext = DEFAULT_CONTEXT;
+  let editingContext = false;
+
+  const clip = (v, n) => { const t = String(v == null ? "" : v).replace(/\s+/g, " ").trim(); return t.length > n ? t.slice(0, n) + "…" : t; };
+
+  function outreachPrompt() {
+    const a = sheet.account || {};
+    const contacts = (sheet.contacts || []).slice().sort((x, y) => Number(pins.has(y.Id)) - Number(pins.has(x.Id))).slice(0, 25)
+      .map((c) => `- ${c.Name}${c.Title ? `, ${clip(c.Title, 90)}` : ""}${pins.has(c.Id) ? " [PRIMARY]" : ""}${c.Email ? "" : " (no email)"}`);
+    const tasks = (sheet.tasks || []).slice(0, 15)
+      .map((t) => `- ${effDate(t)} · ${t.IsClosed ? "done" : "open"} · ${clip(t.Subject, 110)}${t.Who && t.Who.Name ? ` · with ${t.Who.Name}` : ""}`);
+    const opps = (sheet.opps || []).map((o) => `- ${clip(o.Name, 90)} · ${o.StageName || "no stage"} · close ${o.CloseDate || "n/a"}${o.NextStep ? ` · next step: ${clip(o.NextStep, 240)}` : ""}`);
+    return [
+      "You help a salesperson at Otoma plan their next outreach to one account.",
+      `About Otoma and house style: ${clip(outreachContext, 800)}`,
+      `Today is ${localDay(new Date())}.`,
+      "Use ONLY the CRM data below. Don't invent facts, names, numbers or events. If the data is thin, say what to find out.",
+      "",
+      "Reply in exactly this format, plain text, no bold or other markdown except the ## headings:",
+      "## Angle",
+      "2-3 short bullets starting with \"- \": why reach out now and what to lead with.",
+      "## Who",
+      "1-3 bullets starting with \"- \": which contact(s) from the list, and why. Prefer [PRIMARY] contacts.",
+      "## Email",
+      "Subject: <subject line>",
+      "<email to the first contact you named, under 120 words, plain and specific, signed [Your name]>",
+      "## Watch out",
+      "1-2 bullets starting with \"- \": risks or sensitivities from the notes. Write \"- None noted\" if there are none.",
+      "",
+      "=== CRM DATA ===",
+      `Account: ${a.Name || "?"} · Type: ${a.Type || "?"} · Relationship: ${a.Relationship_Status__c || "?"} · Segment: ${a.TAM_Segment__c || "?"} · Region: ${[a.Region__c, a.Country__c].filter(Boolean).join(", ") || "?"} · Current payments vendor: ${a.Current_Payments_Platform_Vendor__c || "?"}`,
+      `Relationship summary: ${clip(htmlToText(a.Account_Relationship_Summary__c || ""), 2500) || "(none)"}`,
+      `Strategic notes: ${clip(htmlToText(a.Account_Strategic_Notes__c || ""), 2500) || "(none)"}`,
+      "Open opportunities:", ...(opps.length ? opps : ["- none"]),
+      "Recent activity (newest first):", ...(tasks.length ? tasks : ["- none logged"]),
+      "Contacts:", ...(contacts.length ? contacts : ["- none on record"]),
+    ].join("\n");
+  }
+
+  async function draftOutreach(regenerate) {
+    if (!sample || !sheet || !sheet.account) return;
+    if (outreach.ctl) outreach.ctl.abort();
+    const ctl = new AbortController();
+    const forId = sheet.id;
+    outreach = { status: "thinking", text: "", error: null, ctl };
+    renderOutreach();
+    try {
+      const res = await sample(outreachPrompt(), {
+        signal: ctl.signal,
+        cache: regenerate ? false : { gcTime: 30 * 60000 },
+        onText: ({ text }) => {
+          if (!sheet || sheet.id !== forId) return;
+          outreach.status = "streaming"; outreach.text = text; renderOutreachStream();
+        },
+      });
+      if (!sheet || sheet.id !== forId) return;
+      outreach = { status: "done", text: res.text, error: res.truncated ? "The draft was cut short. Try Regenerate." : null, ctl: null };
+    } catch (e) {
+      if (!sheet || sheet.id !== forId) return;
+      const code = e && e.code;
+      if (code === "cancelled") { outreach = { status: e.text ? "done" : "idle", text: e.text || "", error: null, ctl: null }; }
+      else {
+        const copy = {
+          not_granted: "Claude isn’t allowed to draft on this page. Reload and choose Allow when asked.",
+          sampling_disabled: "Claude drafting isn’t available on your account.",
+          rate_limited: "You’ve hit a usage limit. Try again in a little while.",
+          session_expired: "Your Claude session expired. Sign in again, then retry.",
+          refused: "Claude declined to draft this one.",
+          prompt_too_large: "There’s too much account data to send. Try again after trimming notes.",
+        }[code] || "The draft didn’t finish. Try again.";
+        if (code === "not_granted" || code === "sampling_disabled" || code === "capability_disabled" || code === "not_declared") sampleState = "absent";
+        outreach = { status: e && e.text && code !== "refused" ? "done" : "idle", text: code === "refused" ? "" : (e && e.text) || "", error: copy, ctl: null };
+      }
+    }
+    renderOutreach();
+  }
+
+  function parseSections(text) {
+    const parts = String(text).split(/^##\s+/m).map((p) => p.trim()).filter(Boolean);
+    return parts.map((p) => { const nl = p.indexOf("\n"); return nl === -1 ? { title: p, body: "" } : { title: p.slice(0, nl).trim(), body: p.slice(nl + 1).trim() }; });
+  }
+
+  function copyButton(getText) {
+    const btn = h("button", { type: "button", class: "copy-btn" }, "Copy");
+    btn.addEventListener("click", () => {
+      const txt = getText();
+      const done = () => { btn.textContent = "Copied"; setTimeout(() => { btn.textContent = "Copy"; }, 1500); };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(txt).then(done, () => selectDraft(btn));
+      } else selectDraft(btn);
+    });
+    return btn;
+  }
+  function selectDraft(btn) {
+    const pre = btn.closest("div") && btn.closest("div").querySelector(".email-draft");
+    if (!pre) return;
+    const r = document.createRange(); r.selectNodeContents(pre);
+    const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+    btn.textContent = "Selected, press ⌘C";
+  }
+
+  function renderOutreachStream() {
+    const box = document.getElementById("outreach-body");
+    if (box) mount(box, h("div", { class: "outreach-stream" }, outreach.text));
+  }
+
+  function renderOutreach() {
+    const el = document.getElementById("outreach");
+    if (!el || !sheet) return;
+    if (sampleState === "absent" && outreach.status === "idle") {
+      mount(el, h("p", { class: "empty" }, "Outreach drafting needs Claude, which isn’t available in this view. Open the page in claude.ai or the Claude app."));
+      return;
+    }
+    const ready = !!sheet.account && sheet.contacts !== null && sheet.tasks !== null && sheet.opps !== null;
+    const busy = outreach.status === "thinking" || outreach.status === "streaming";
+    const actions = h("div", { class: "outreach-actions" },
+      !busy && h("button", { type: "button", class: "btn", disabled: !ready || !sample, onclick: () => draftOutreach(outreach.status === "done") },
+        outreach.status === "done" ? "Regenerate" : "Draft outreach"),
+      busy && h("button", { type: "button", class: "btn ghost", onclick: () => outreach.ctl && outreach.ctl.abort() }, "Stop"),
+      !busy && outreach.status === "idle" && h("span", { class: "hint", style: "margin:0" },
+        !ready ? "Waiting for Salesforce data…" : !sample ? "Connecting to Claude…" : "Uses this account’s notes, activity, opportunities and ★ primary contacts."),
+      !busy && h("button", { type: "button", class: "small-link", style: "margin-left:auto", onclick: () => { editingContext = !editingContext; renderOutreach(); } },
+        editingContext ? "Close context" : "Edit Otoma context"));
+
+    let body;
+    if (outreach.status === "thinking") body = h("div", { class: "outreach-thinking" }, "Thinking… (the first draft takes 10–40 seconds)");
+    else if (outreach.status === "streaming") body = h("div", { class: "outreach-stream" }, outreach.text);
+    else if (outreach.status === "done" && outreach.text) {
+      body = h("div", { class: "outreach-sections" }, parseSections(outreach.text).map((sec) => {
+        if (/^email/i.test(sec.title)) {
+          return h("div", {}, h("h3", {}, sec.title, copyButton(() => sec.body)), h("div", { class: "email-draft" }, sec.body));
+        }
+        return h("div", {}, h("h3", {}, sec.title), prose(sec.body, "—"));
+      }));
+    }
+
+    const ctxEditor = editingContext && h("div", { class: "context-edit" },
+      h("label", { for: "outreach-context", class: "hint", style: "margin:0" }, "What Claude should know about Otoma and your style. Saved for every account."),
+      h("textarea", { id: "outreach-context" }, outreachContext),
+      h("div", { class: "outreach-actions" },
+        h("button", { type: "button", class: "btn", disabled: !db, onclick: saveContext }, "Save context"),
+        !db && h("span", { class: "hint", style: "margin:0" }, "Saving needs this page’s storage, which isn’t available in this view.")));
+
+    mount(el, h("div", { class: "outreach-box" },
+      actions,
+      ctxEditor,
+      h("div", { id: "outreach-body" }, body),
+      outreach.error && h("p", { class: "error-inline" }, outreach.error)));
+  }
+
+  async function saveContext() {
+    const ta = document.getElementById("outreach-context");
+    const text = (ta ? ta.value : "").trim().slice(0, 1500) || DEFAULT_CONTEXT;
+    try {
+      await db.doc("settings/outreach").set({ context: text, updatedAt: new Date().toISOString() });
+      outreachContext = text; editingContext = false;
+    } catch (err) {
+      outreach.error = err && err.code === "invalid_argument" ? "You have view-only access, so the context can’t be saved." : "Couldn’t save the context. Try again.";
+    }
+    renderOutreach();
   }
 
   // Contacts + primary pins
@@ -938,7 +1358,7 @@ a.resource .arrow { color: var(--rail-teal); }
   function render() {
     applyTheme();
     if (route.view === "sheet") renderSheet();
-    else { teardownSheetSubs(); sheet = null; document.title = "Otoma Account Cheat Sheet"; renderSearch(); }
+    else { teardownSheetSubs(); if (outreach.ctl) outreach.ctl.abort(); sheet = null; document.title = "Otoma Account Cheat Sheet"; renderSearch(); }
   }
 
   readHash();
@@ -946,16 +1366,24 @@ a.resource .arrow { color: var(--rail-teal); }
 
   const use = window.claude && typeof window.claude.use === "function" ? window.claude.use.bind(window.claude) : null;
   if (!use) {
-    mcpState = "absent"; dbState = "absent";
+    mcpState = "absent"; dbState = "absent"; sampleState = "absent";
     render();
   } else {
     use("mcp").then((m) => {
       mcp = m; mcpState = m ? "ready" : "absent";
-      if (route.view === "sheet") { sheet = null; render(); } else runSearch();
+      if (route.view === "sheet") { sheet = null; render(); } else { runSearch(); loadDashboard(false); }
     }).catch(() => { mcpState = "absent"; render(); });
+    use("sample").then((sm) => {
+      sample = sm; sampleState = sm ? "ready" : "absent";
+      if (route.view === "sheet") renderOutreach();
+    }).catch(() => { sampleState = "absent"; });
     use("db").then((d) => {
       db = d; dbState = d ? "ready" : "absent";
       subscribeDefaults();
+      if (d) d.doc("settings/outreach").onSnapshot((snap) => {
+        const t = snap.exists && snap.data().context;
+        outreachContext = typeof t === "string" && t.trim() ? t : DEFAULT_CONTEXT;
+      }, () => {});
       if (route.view === "sheet" && sheet) { subscribeSheetDocs(sheet.id); renderContacts(); renderResources(); }
     }).catch(() => { dbState = "absent"; });
   }
