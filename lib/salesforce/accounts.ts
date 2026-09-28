@@ -94,7 +94,7 @@ export async function getCheatSheet(accountId: string): Promise<CheatSheet | nul
       { maxRecords: 500 },
     ),
     query<Rec>(
-      `SELECT Id, Subject, ActivityDate, CreatedDate, Status, IsClosed, Type, Who.Name, Owner.Name ` +
+      `SELECT Id, Subject, ActivityDate, CreatedDate, Status, IsClosed, TaskSubtype, Who.Name, Owner.Name ` +
         `FROM Task WHERE WhatId = '${id}' AND IsDeleted = false ` +
         `ORDER BY ActivityDate DESC NULLS LAST, CreatedDate DESC LIMIT 500`,
       { includeArchived: true, maxRecords: 500 },
@@ -137,7 +137,7 @@ export async function getCheatSheet(accountId: string): Promise<CheatSheet | nul
         createdDate: String(t.CreatedDate),
         status: str(t.Status),
         isClosed: t.IsClosed === true,
-        type: str(t.Type),
+        type: t.TaskSubtype === "Task" ? null : str(t.TaskSubtype),
         whoName: rel(t, "Who"),
         ownerName: rel(t, "Owner"),
       }),

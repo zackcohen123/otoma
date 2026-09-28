@@ -1,0 +1,963 @@
+<title>Otoma Account Cheat Sheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap">
+<style>
+:root {
+  --paper: #f7f5ef; --card: #fffdf8; --text: #1b2430; --muted: #5d6671; --faint: #8a919a;
+  --line: #e2ddd0; --line-strong: #cfc8b7;
+  --teal: #3b6e5e; --teal-strong: #2f5a4c; --teal-soft: #e3ede8; --teal-line: #9fbfb3;
+  --rust: #b54834; --rust-soft: #f6e3dd; --focus: #3b6e5e;
+  --rail-bg: #1b2430; --rail-text: #ece8de; --rail-muted: #9aa4b0; --rail-line: #2e3a4a;
+  --rail-hover: #243041; --rail-teal: #8cc2ae; --rail-rust: #e58b77; --rail-input: #243041;
+  --serif: "Fraunces", "Iowan Old Style", Georgia, serif;
+  --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --radius: 6px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #14191f; --card: #1b222b; --text: #ebe7dd; --muted: #a1a9b3; --faint: #7a838e;
+    --line: #29323d; --line-strong: #3a4552;
+    --teal: #74ae98; --teal-strong: #8cc2ae; --teal-soft: #1c302a; --teal-line: #3f6a5b;
+    --rust: #df7a64; --rust-soft: #3a231e; --focus: #8cc2ae;
+    --rail-bg: #0f141a; --rail-line: #232d39; --rail-hover: #19212b; --rail-input: #19212b;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #14191f; --card: #1b222b; --text: #ebe7dd; --muted: #a1a9b3; --faint: #7a838e;
+  --line: #29323d; --line-strong: #3a4552;
+  --teal: #74ae98; --teal-strong: #8cc2ae; --teal-soft: #1c302a; --teal-line: #3f6a5b;
+  --rust: #df7a64; --rust-soft: #3a231e; --focus: #8cc2ae;
+  --rail-bg: #0f141a; --rail-line: #232d39; --rail-hover: #19212b; --rail-input: #19212b;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--text); font: 14px/1.5 var(--sans); -webkit-font-smoothing: antialiased; }
+a { color: inherit; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+h1, h2, h3 { font-family: var(--serif); font-weight: 600; margin: 0; letter-spacing: -0.01em; text-wrap: balance; }
+.num { font-variant-numeric: tabular-nums; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.eyebrow { font: 600 11px/1.2 var(--sans); text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+.badge { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 999px; font-size: 12px; font-weight: 500; white-space: nowrap; border: 1px solid var(--line-strong); color: var(--muted); }
+.badge.teal { background: var(--teal-soft); border-color: var(--teal-line); color: var(--teal-strong); }
+.badge.rust { background: var(--rust-soft); border-color: transparent; color: var(--rust); }
+.pill-btn { font: 500 12px/1 var(--sans); color: var(--muted); background: transparent; border: 1px solid var(--line-strong); border-radius: 999px; padding: 6px 10px; cursor: pointer; white-space: nowrap; }
+.pill-btn:hover { color: var(--text); }
+.on-rail .pill-btn, .pill-btn.on-rail { color: var(--rail-muted); border-color: var(--rail-line); }
+.on-rail .pill-btn:hover, .pill-btn.on-rail:hover { color: var(--rail-text); }
+.empty { color: var(--muted); font-size: 13px; padding: 14px 16px; border: 1px dashed var(--line-strong); border-radius: var(--radius); margin: 0; }
+.notice { padding: 12px 16px; border-radius: var(--radius); background: var(--rust-soft); color: var(--rust); font-size: 13px; margin: 0; }
+.notice strong { display: block; margin-bottom: 2px; }
+.skeleton { background: var(--line); border-radius: 4px; opacity: 0.7; }
+.skel-line { height: 12px; margin-bottom: 10px; }
+
+/* Landing */
+.topbar { background: var(--rail-bg); color: var(--rail-text); padding-inline: 16px; }
+.topbar-inner { max-width: 1080px; margin: 0 auto; padding-block: 14px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.wordmark { font-family: var(--serif); font-size: 18px; font-weight: 600; }
+.wordmark span { color: var(--rail-muted); font-weight: 500; }
+.landing { max-width: 1080px; margin: 0 auto; padding: 32px 16px 64px; }
+.landing h1 { font-size: 30px; margin-bottom: 14px; }
+.search { position: relative; margin-bottom: 20px; }
+.search input { width: 100%; font: 400 17px/1.3 var(--sans); padding: 13px 110px 13px 42px; border: 1px solid var(--line-strong); border-radius: var(--radius); background: var(--card); color: var(--text); }
+.search input:focus { outline: 2px solid var(--focus); outline-offset: -1px; border-color: transparent; }
+.search svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--faint); }
+.search .pending { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); font-size: 12px; color: var(--faint); }
+.results-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 8px; }
+.results { list-style: none; margin: 0; padding: 0; border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); overflow: hidden; }
+.results li + li { border-top: 1px solid var(--line); }
+.result { display: grid; grid-template-columns: minmax(0, 2.2fr) minmax(0, 1.2fr) minmax(0, 1.1fr) minmax(0, 1fr) 80px; gap: 12px; align-items: center; padding: 11px 16px; text-decoration: none; }
+.result:hover { background: var(--teal-soft); }
+.result .name { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.result .cell { color: var(--muted); font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.result .when { text-align: right; }
+.result .when.stale { color: var(--rust); }
+
+/* Sheet shell */
+.sheet { display: grid; grid-template-columns: 300px minmax(0, 1fr); min-height: 100vh; background: linear-gradient(to right, var(--rail-bg) 300px, transparent 300px); }
+.rail { background: var(--rail-bg); color: var(--rail-text); position: sticky; top: env(safe-area-inset-top, 0px); max-height: 100vh; overflow-y: auto; padding: 20px 22px 28px; display: flex; flex-direction: column; gap: 22px; }
+.rail a { color: var(--rail-text); }
+.rail .eyebrow { color: var(--rail-muted); }
+.rail-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 12px; }
+.back { background: none; border: 0; padding: 0; color: var(--rail-muted); cursor: pointer; font-size: 12px; }
+.back:hover { color: var(--rail-text); }
+.identity h1 { font-size: 27px; line-height: 1.15; font-variation-settings: "opsz" 72; margin: 6px 0 10px; overflow-wrap: anywhere; }
+.identity .badges { display: flex; flex-wrap: wrap; gap: 6px; }
+.rail .badge { border-color: var(--rail-line); color: var(--rail-muted); }
+.rail .badge.teal { background: rgba(140, 194, 174, 0.14); border-color: rgba(140, 194, 174, 0.35); color: var(--rail-teal); }
+.rail .badge.rust { background: rgba(229, 139, 119, 0.15); color: var(--rail-rust); }
+.rail .skeleton { background: var(--rail-line); }
+.facts { margin: 8px 0 0; display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 14px; row-gap: 7px; font-size: 13px; }
+.facts dt { color: var(--rail-muted); }
+.facts dd { margin: 0; text-align: right; overflow-wrap: anywhere; }
+.facts dd.none { color: var(--rail-muted); opacity: 0.6; }
+.drawer-toggle { display: none; }
+.drawer-body { display: flex; flex-direction: column; gap: 22px; }
+.section-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.link-btn { background: none; border: 0; padding: 0; cursor: pointer; font-size: 12px; color: var(--rail-teal); }
+.link-btn:hover { text-decoration: underline; }
+.resources { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 2px; }
+.resource { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 7px 9px; margin: 0 -9px; border-radius: 4px; font-size: 13px; text-decoration: none; }
+a.resource:hover { background: var(--rail-hover); }
+a.resource .arrow { color: var(--rail-teal); }
+.resource.pending { color: var(--rail-muted); }
+.resource .tag { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; border: 1px dashed var(--rail-line); border-radius: 3px; padding: 1px 6px; white-space: nowrap; }
+.rail-note { font-size: 12px; color: var(--rail-muted); margin: 8px 0 0; }
+.editor { margin-top: 10px; display: grid; gap: 8px; }
+.editor label { font-size: 11px; color: var(--rail-muted); display: grid; gap: 4px; }
+.editor select, .editor input { width: 100%; font: 13px var(--sans); color: var(--rail-text); background: var(--rail-input); border: 1px solid var(--rail-line); border-radius: 4px; padding: 6px 8px; }
+.editor .row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px; padding: 8px; border: 1px solid var(--rail-line); border-radius: 4px; }
+.editor .row input + input { margin-top: 4px; }
+.editor .remove { background: none; border: 0; color: var(--rail-muted); cursor: pointer; font-size: 16px; line-height: 1; padding: 2px 4px; align-self: start; }
+.editor .remove:hover { color: var(--rail-rust); }
+.editor .actions { display: flex; gap: 8px; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+.editor .primary { background: var(--rail-teal); color: var(--rail-bg); border: 0; border-radius: 4px; padding: 6px 12px; font-weight: 600; font-size: 12px; cursor: pointer; }
+.editor .primary:disabled { opacity: 0.5; cursor: wait; }
+.editor .err { color: var(--rail-rust); font-size: 12px; }
+.rail-foot { margin-top: auto; font-size: 11px; color: var(--rail-muted); line-height: 1.6; }
+
+.main { padding: 22px 32px 64px; max-width: 1240px; width: 100%; }
+.main-top { display: flex; justify-content: flex-end; align-items: center; gap: 12px; font-size: 12px; color: var(--muted); margin-bottom: 14px; flex-wrap: wrap; }
+.live-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--teal); margin-right: 6px; vertical-align: 1px; }
+.panel { margin-bottom: 30px; }
+.panel-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; border-bottom: 1px solid var(--line-strong); padding-bottom: 7px; margin-bottom: 14px; }
+.panel-head h2 { font-size: 20px; }
+.panel-head .meta { font-size: 12px; color: var(--muted); }
+.snapshot { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 26px; }
+.snapshot h3 { font: 600 11px/1.2 var(--sans); text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 8px; }
+.prose { font-size: 15px; line-height: 1.6; max-width: 68ch; }
+.prose p, .prose ul, .prose ol { margin: 0 0 10px; }
+.prose ul, .prose ol { padding-left: 20px; }
+.prose li { margin-bottom: 3px; }
+.prose li::marker { color: var(--teal); }
+.prose strong { font-weight: 600; }
+.callouts { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.callouts:empty { display: none; }
+.callout { display: inline-flex; align-items: baseline; gap: 7px; padding: 6px 12px; border-radius: var(--radius); font-size: 13px; font-weight: 500; background: var(--teal-soft); color: var(--teal-strong); }
+.callout strong { font-family: var(--serif); font-size: 16px; }
+.callout.rust { background: var(--rust-soft); color: var(--rust); }
+
+.contacts { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px; }
+.contact { position: relative; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 40px 12px 14px; min-width: 0; }
+.contact.primary { border-color: var(--teal); background: var(--teal-soft); box-shadow: inset 3px 0 0 var(--teal); }
+.contact .cname { font-weight: 600; }
+.contact .ctitle { color: var(--muted); font-size: 13px; margin-top: 1px; }
+.contact .links { margin-top: 8px; font-size: 13px; display: grid; gap: 2px; }
+.contact .links a { color: var(--teal-strong); text-decoration: none; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; user-select: all; }
+.contact .links a:hover { text-decoration: underline; }
+.contact .links .missing { color: var(--faint); }
+.pin { position: absolute; top: 8px; right: 8px; width: 28px; height: 28px; display: grid; place-items: center; border: 0; border-radius: 4px; background: transparent; color: var(--faint); font-size: 17px; line-height: 1; cursor: pointer; }
+.pin:hover:not(:disabled) { background: var(--line); color: var(--text); }
+.pin[aria-pressed="true"] { color: var(--teal); }
+.pin:disabled { cursor: not-allowed; opacity: 0.45; }
+.primary-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; color: var(--teal-strong); margin-bottom: 2px; }
+.hint { font-size: 12px; color: var(--muted); margin: 10px 0 0; }
+.error-inline { color: var(--rust); font-size: 12px; margin: 8px 0 0; }
+
+.split { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 36px; }
+.timeline { list-style: none; margin: 0; padding: 0; position: relative; }
+.timeline::before { content: ""; position: absolute; left: 5px; top: 6px; bottom: 6px; width: 1px; background: var(--line-strong); }
+.tl-item { position: relative; padding: 0 0 14px 24px; }
+.tl-item::before { content: ""; position: absolute; left: 0; top: 5px; width: 11px; height: 11px; border-radius: 50%; background: var(--paper); border: 2px solid var(--line-strong); }
+.tl-item.done::before { background: var(--teal); border-color: var(--teal); }
+.tl-item.open::before { border-color: var(--teal); }
+.tl-item.upcoming::before { border-color: var(--teal); background: var(--teal-soft); }
+.tl-item.overdue::before { border-color: var(--rust); }
+.tl-date { font-size: 12px; color: var(--muted); display: flex; gap: 8px; flex-wrap: wrap; }
+.tl-subject { font-weight: 500; margin: 1px 0 2px; overflow-wrap: anywhere; }
+.tl-meta { font-size: 12px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 10px; }
+.tl-meta .s-open { color: var(--teal-strong); font-weight: 500; }
+.tl-meta .s-overdue { color: var(--rust); font-weight: 600; }
+.tl-divider { font: 600 11px/1 var(--sans); text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); padding: 2px 0 12px 24px; }
+.show-more { margin: 4px 0 0 24px; font: 500 13px var(--sans); color: var(--teal-strong); background: none; border: 0; padding: 4px 0; cursor: pointer; }
+.news-links { display: grid; gap: 8px; }
+.news-link { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 14px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); text-decoration: none; }
+.news-link:hover { border-color: var(--teal-line); background: var(--teal-soft); }
+.news-link .nl-title { font-weight: 500; }
+.news-link .nl-sub { font-size: 12px; color: var(--muted); }
+.news-link .arrow { color: var(--teal); }
+
+@media (max-width: 1100px) { .split { grid-template-columns: minmax(0, 1fr); gap: 10px; } }
+@media (max-width: 860px) {
+  .sheet { grid-template-columns: minmax(0, 1fr); background: none; }
+  .rail { position: static; max-height: none; padding: 14px 16px 16px; gap: 12px; }
+  .identity h1 { font-size: 24px; }
+  .rail-drawer { border-top: 1px solid var(--rail-line); padding-top: 8px; }
+  .drawer-toggle { display: flex; width: 100%; justify-content: space-between; align-items: center; background: none; border: 0; padding: 4px 0; font: 500 13px var(--sans); color: var(--rail-muted); cursor: pointer; }
+  .rail-drawer:not(.open) .drawer-body { display: none; }
+  .rail-drawer.open .drawer-toggle { margin-bottom: 12px; }
+  .rail-foot { display: none; }
+  .main { padding: 14px 16px 48px; }
+  .main-top { justify-content: space-between; }
+  .result { grid-template-columns: minmax(0, 1fr) auto; row-gap: 2px; }
+  .result .hide-sm { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+</style>
+
+<div id="app"></div>
+
+<script>
+(() => {
+  "use strict";
+
+  // ── Config ─────────────────────────────────────────────────────────────
+  const ZAPIER = "Zapier";
+  const READ_TOOL = "execute_zapier_read_action";
+  const DENSE_WINDOWS = [{ days: 7, min: 3 }, { days: 14, min: 4 }, { days: 30, min: 6 }];
+  const STALE_AFTER_DAYS = 60;
+  const TIMELINE_VISIBLE = 15;
+
+  // ── Tiny DOM helper (all Salesforce text goes in as text nodes) ────────
+  function h(tag, props, ...kids) {
+    const el = document.createElement(tag);
+    for (const [k, v] of Object.entries(props || {})) {
+      if (v == null || v === false) continue;
+      if (k === "class") el.className = v;
+      else if (k.startsWith("on")) el.addEventListener(k.slice(2), v);
+      else if (k === "style") el.style.cssText = v;
+      else el.setAttribute(k, v === true ? "" : v);
+    }
+    for (const kid of kids.flat(Infinity)) {
+      if (kid == null || kid === false) continue;
+      el.append(kid instanceof Node ? kid : String(kid));
+    }
+    return el;
+  }
+  const mount = (el, ...kids) => { if (el) el.replaceChildren(...kids.flat(Infinity).filter((k) => k != null && k !== false)); };
+  const extLink = (href, props, ...kids) => h("a", { href, target: "_blank", rel: "noopener noreferrer", ...props }, ...kids);
+
+  // ── Dates (browser-local "today") ──────────────────────────────────────
+  const pad = (n) => String(n).padStart(2, "0");
+  const localDay = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  const parseSfDateTime = (s) => new Date(String(s).replace(/([+-]\d{2})(\d{2})$/, "$1:$2"));
+  function dayDiff(isoDay) {
+    const [y, m, d] = isoDay.slice(0, 10).split("-").map(Number);
+    const t = new Date();
+    return Math.round((Date.UTC(y, m - 1, d) - Date.UTC(t.getFullYear(), t.getMonth(), t.getDate())) / 864e5);
+  }
+  function fmtDate(isoDay) {
+    if (!isoDay) return "—";
+    const [y, m, d] = isoDay.slice(0, 10).split("-").map(Number);
+    return new Date(y, m - 1, d).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+  }
+  function relDays(isoDay) {
+    const n = dayDiff(isoDay);
+    if (n === 0) return "today";
+    if (n === -1) return "yesterday";
+    if (n === 1) return "tomorrow";
+    return n < 0 ? `${-n}d ago` : `in ${n}d`;
+  }
+
+  // ── Salesforce via the viewer's Zapier connector ───────────────────────
+  let mcp = null;
+  let mcpState = "loading"; // loading | ready | absent
+
+  const soqlStr = (v) => String(v).replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+  const soqlLike = (v) => soqlStr(v).replace(/%/g, "\\%").replace(/_/g, "\\_");
+  const isSfId = (id) => /^[a-zA-Z0-9]{15}([a-zA-Z0-9]{3})?$/.test(id || "");
+
+  function recordsFrom(payload) {
+    let p = payload;
+    if (typeof p === "string") { try { p = JSON.parse(p); } catch { return []; } }
+    if (Array.isArray(p)) return p;
+    if (p && Array.isArray(p.results)) return p.results;
+    if (p && typeof p === "object") {
+      const arr = Object.values(p).find(Array.isArray);
+      if (arr) return arr;
+    }
+    return [];
+  }
+
+  async function soql(query, { fresh = false } = {}) {
+    if (!mcp) throw { code: mcpState === "absent" ? "not_granted" : "loading", message: "Salesforce connection not ready" };
+    const input = {
+      selected_api: "SalesforceCLIAPI",
+      action: "custom_soql_query",
+      tool_name: "salesforce_custom_soql_query",
+      params: { query_type: "custom", dynamic_properties: { soql_query: query } },
+    };
+    const opts = { cache: { staleTime: 20000, gcTime: 30 * 60000, refresh: fresh } };
+    try {
+      return recordsFrom((await mcp.callTool(ZAPIER, READ_TOOL, input, opts)).payload);
+    } catch (err) {
+      if (err && err.retryable) {
+        await new Promise((r) => setTimeout(r, (err.retryAfterMs || 800) + Math.random() * 600));
+        return recordsFrom((await mcp.callTool(ZAPIER, READ_TOOL, input, opts)).payload);
+      }
+      throw err;
+    }
+  }
+
+  function errorView(err) {
+    const code = err && err.code;
+    const map = {
+      needs_reauth: ["Zapier needs to be reconnected", "Reconnect Zapier in claude.ai → Settings → Connectors, then press Refresh."],
+      server_not_connected: ["Zapier isn’t connected", "Add the Zapier connector in claude.ai → Settings → Connectors. Its Salesforce app provides this page’s data."],
+      selection_required: ["Choose a Zapier connection", "You have more than one Zapier connector. Pick one in the prompt Claude shows, then press Refresh."],
+      not_in_manifest: ["Zapier access is off for this page", "Allow Zapier for this page when Claude asks (reload the page to be asked again)."],
+      blocked_by_policy: ["Blocked by your organization", "Your Claude organization’s policy blocks this Zapier tool."],
+      approval_required: ["Needs approval", "Your organization requires approval for this Zapier tool."],
+      not_granted: ["Open this in Claude", "This page reads Salesforce through your Claude connectors, so it only works inside claude.ai or the Claude desktop app."],
+      capability_disabled: ["Open this in Claude", "This view can’t reach your connectors. Open the page in claude.ai or the Claude desktop app."],
+      server_unavailable: ["Zapier didn’t respond", "Salesforce via Zapier timed out. Press Refresh to try again."],
+    };
+    if (code === "tool_error") {
+      const msg = String(err.message || "").replace(/^Error during execution:\s*/i, "").trim();
+      return h("div", { class: "notice" }, h("strong", {}, "Salesforce returned an error"), msg || "The query failed.");
+    }
+    const [title, body] = map[code] || ["Couldn’t load from Salesforce", (err && err.message) || "Unknown error. Press Refresh to try again."];
+    return h("div", { class: "notice" }, h("strong", {}, title), body);
+  }
+
+  // ── Shared store: primary pins + Quick Access links ────────────────────
+  let db = null;
+  let dbState = "loading";
+  let defaults = new Map(); // docId -> items
+  let defaultsUnsub = null;
+
+  function subscribeDefaults() {
+    if (!db || defaultsUnsub) return;
+    defaultsUnsub = db.collection("resource-defaults").onSnapshot(
+      (snap) => {
+        defaults = new Map(snap.docs.map((d) => [d.id, (d.data() || {}).items || []]));
+        if (route.view === "sheet") renderResources();
+      },
+      () => { defaultsUnsub = null; },
+    );
+  }
+
+  const typeKey = (type) => "type-" + String(type || "none").replace(/[^A-Za-z0-9_-]/g, "_").slice(0, 60);
+
+  function safeUrl(raw) {
+    const v = String(raw || "").trim();
+    if (!v) return null;
+    try {
+      const u = new URL(/^https?:\/\//i.test(v) ? v : "https://" + v);
+      return u.protocol === "https:" || u.protocol === "http:" ? u.toString() : null;
+    } catch { return null; }
+  }
+
+  // ── Prose rendering for relationship fields ────────────────────────────
+  const BULLET = /^\s*(?:[-*•–·]|\d+[.)])\s+/;
+  function htmlToText(input) {
+    if (!/<[a-z!/][\s\S]*>/i.test(input)) return input;
+    const doc = new DOMParser().parseFromString(
+      input.replace(/<\s*br\s*\/?>/gi, "\n").replace(/<\s*li[^>]*>/gi, "\n- ").replace(/<\/\s*(p|div|li|h[1-6]|ul|ol)\s*>/gi, "\n\n"),
+      "text/html",
+    );
+    return doc.body.textContent || "";
+  }
+  function lineNode(text) {
+    const m = text.match(/^([A-Z][^:.!?]{0,28}):\s+(.+)$/);
+    return m ? [h("strong", {}, m[1] + ":"), " ", m[2]] : [text];
+  }
+  function prose(raw, emptyText) {
+    if (!raw || !String(raw).trim()) return h("p", { class: "empty" }, emptyText);
+    const text = htmlToText(String(raw)).replace(/\r\n?/g, "\n");
+    const out = h("div", { class: "prose" });
+    for (const chunk of text.split(/\n{2,}/)) {
+      const lines = chunk.split("\n").map((l) => l.trim()).filter(Boolean);
+      let para = null, list = null;
+      for (const line of lines) {
+        if (BULLET.test(line)) {
+          para = null;
+          if (!list) { list = h(/^\s*\d/.test(line) ? "ol" : "ul"); out.append(list); }
+          list.append(h("li", {}, lineNode(line.replace(BULLET, ""))));
+        } else {
+          list = null;
+          if (!para) { para = h("p"); out.append(para); } else para.append(h("br"));
+          para.append(...lineNode(line));
+        }
+      }
+    }
+    return out;
+  }
+
+  function statusTone(s) {
+    if (!s) return "";
+    // Org values: Engaged, Active Opportunity, Customer (teal) · Engaged — Dormant (rust) · Not Engaged (neutral)
+    if (/risk|churn|lost|inactive|stalled|dormant|closed|former|cancel/i.test(s)) return "rust";
+    if (/^\s*not\b|unengaged/i.test(s)) return "";
+    if (/active|customer|engaged|opportun|partner|pilot/i.test(s)) return "teal";
+    return "";
+  }
+
+  // ── Theme toggle (overrides the viewer's theme when set) ───────────────
+  const THEMES = ["auto", "light", "dark"];
+  let theme = "auto";
+  try { const t = localStorage.getItem("cheatsheet-theme"); if (THEMES.includes(t)) theme = t; } catch {}
+  function applyTheme() {
+    if (theme === "auto") delete document.documentElement.dataset.theme;
+    else document.documentElement.dataset.theme = theme;
+  }
+  function themeButton(onRail) {
+    const label = { auto: "◐ Auto", light: "☀ Light", dark: "☾ Dark" }[theme];
+    return h("button", {
+      type: "button", class: "pill-btn" + (onRail ? " on-rail" : ""), title: "Switch color theme",
+      onclick: () => {
+        theme = THEMES[(THEMES.indexOf(theme) + 1) % 3];
+        try { localStorage.setItem("cheatsheet-theme", theme); } catch {}
+        applyTheme();
+        render();
+      },
+    }, label);
+  }
+
+  // ── Routing ────────────────────────────────────────────────────────────
+  let route = { view: "search" };
+  let query = "";
+  function readHash() {
+    const m = location.hash.match(/^#a-([a-zA-Z0-9]{15,18})$/);
+    route = m ? { view: "sheet", id: m[1] } : { view: "search" };
+  }
+  function go(id) {
+    if (id) location.hash = "a-" + id;
+    else history.pushState(null, "", location.pathname + location.search);
+    readHash();
+    render();
+    window.scrollTo(0, 0);
+  }
+  window.addEventListener("hashchange", () => { readHash(); render(); });
+  window.addEventListener("popstate", () => { readHash(); render(); });
+
+  // ── Search view ────────────────────────────────────────────────────────
+  let searchSeq = 0;
+  let searchTimer = null;
+  const SUMMARY_FIELDS = "Id, Name, Type, Relationship_Status__c, Region__c, Country__c, Owner.Name, LastActivityDate";
+
+  function renderSearch() {
+    const input = h("input", {
+      id: "account-search", type: "search", autocomplete: "off", spellcheck: "false",
+      placeholder: "Company name…", value: query,
+      oninput: (e) => {
+        query = e.target.value;
+        clearTimeout(searchTimer);
+        searchTimer = setTimeout(runSearch, 350);
+      },
+    });
+    const app = document.getElementById("app");
+    mount(app,
+      h("header", { class: "topbar" },
+        h("div", { class: "topbar-inner" },
+          h("div", { class: "wordmark" }, "Otoma ", h("span", {}, "Account Cheat Sheet")),
+          themeButton(true))),
+      h("main", { class: "landing" },
+        h("h1", {}, "Who are you calling?"),
+        h("form", { class: "search", role: "search", onsubmit: (e) => { e.preventDefault(); clearTimeout(searchTimer); runSearch(); } },
+          h("label", { for: "account-search", class: "sr-only" }, "Search accounts"),
+          svgSearch(),
+          input,
+          h("span", { class: "pending", id: "search-pending", hidden: true }, "Searching…")),
+        h("div", { class: "results-head" },
+          h("span", { class: "eyebrow", id: "results-label" }, ""),
+          h("button", { type: "button", class: "pill-btn", onclick: () => runSearch(true) }, "Refresh")),
+        h("div", { id: "results" }, skeletonRows())));
+    input.focus();
+    const len = input.value.length;
+    input.setSelectionRange(len, len);
+    runSearch();
+  }
+
+  function svgSearch() {
+    const ns = "http://www.w3.org/2000/svg";
+    const svg = document.createElementNS(ns, "svg");
+    svg.setAttribute("width", "18"); svg.setAttribute("height", "18"); svg.setAttribute("viewBox", "0 0 24 24");
+    svg.setAttribute("fill", "none"); svg.setAttribute("stroke", "currentColor"); svg.setAttribute("stroke-width", "2");
+    svg.setAttribute("aria-hidden", "true");
+    svg.innerHTML = '<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>';
+    return svg;
+  }
+  const skeletonRows = () => h("div", {}, [0, 1, 2, 3].map(() => h("div", { class: "skeleton", style: "height:42px;margin-bottom:6px" })));
+
+  async function runSearch(fresh = false) {
+    if (route.view !== "search") return;
+    if (!mcp) {
+      if (mcpState === "absent") mount(document.getElementById("results"), errorView({ code: "not_granted" }));
+      return;
+    }
+    const seq = ++searchSeq;
+    const t = query.trim().slice(0, 80);
+    const pending = document.getElementById("search-pending");
+    if (pending) pending.hidden = false;
+    const q = t
+      ? `SELECT ${SUMMARY_FIELDS} FROM Account WHERE Name LIKE '%${soqlLike(t)}%' ORDER BY Name LIMIT 50`
+      : `SELECT ${SUMMARY_FIELDS} FROM Account WHERE LastActivityDate != null ORDER BY LastActivityDate DESC LIMIT 25`;
+    try {
+      const rows = await soql(q, { fresh });
+      if (seq !== searchSeq || route.view !== "search") return;
+      document.getElementById("results-label").textContent = t
+        ? `${rows.length}${rows.length === 50 ? "+" : ""} matching “${t}”`
+        : "Recently active";
+      mount(document.getElementById("results"), rows.length
+        ? h("ul", { class: "results" }, rows.map(resultRow))
+        : h("p", { class: "empty" }, t ? `No accounts match “${t}”. Try fewer letters or the legal name.` : "No recently active accounts."));
+    } catch (err) {
+      if (seq !== searchSeq) return;
+      mount(document.getElementById("results"), errorView(err));
+    } finally {
+      if (seq === searchSeq && pending) pending.hidden = true;
+    }
+  }
+
+  function resultRow(a) {
+    const tone = statusTone(a.Relationship_Status__c);
+    const last = a.LastActivityDate;
+    const stale = !last || -dayDiff(last) > STALE_AFTER_DAYS;
+    return h("li", {},
+      h("a", { class: "result", href: "#a-" + a.Id, onclick: (e) => { e.preventDefault(); go(a.Id); } },
+        h("span", { class: "name" }, a.Name),
+        h("span", { class: "cell" }, a.Relationship_Status__c ? h("span", { class: "badge " + tone }, a.Relationship_Status__c) : (a.Type || "—")),
+        h("span", { class: "cell hide-sm" }, [a.Region__c, a.Country__c].filter(Boolean).filter((v, i, arr) => arr.indexOf(v) === i).join(" · ") || "—"),
+        h("span", { class: "cell hide-sm" }, (a.Owner && a.Owner.Name) || "—"),
+        h("span", { class: "cell when num hide-sm" + (stale ? " stale" : ""), title: last ? "Last activity " + fmtDate(last) : "No activity logged" }, last ? relDays(last) : "—")));
+  }
+
+  // ── Cheat sheet view ───────────────────────────────────────────────────
+  let sheetSeq = 0;
+  let sheet = null; // { id, account, contacts, tasks, loadedAt, errors }
+  let pins = new Set();
+  let pinsUnsub = null;
+  let ownResources = [];
+  let ownUnsub = null;
+  let editor = null; // { scope, rows, saving, error }
+  let drawerOpen = false;
+  let showAllTimeline = false;
+
+  function teardownSheetSubs() {
+    if (pinsUnsub) { pinsUnsub(); pinsUnsub = null; }
+    if (ownUnsub) { ownUnsub(); ownUnsub = null; }
+  }
+
+  function subscribeSheetDocs(id) {
+    if (!db) return;
+    teardownSheetSubs();
+    pinsUnsub = db.doc("pins/" + id).onSnapshot(
+      (s) => { pins = new Set(s.exists ? (s.data().ids || []) : []); renderContacts(); },
+      () => {},
+    );
+    ownUnsub = db.doc("resources/" + id).onSnapshot(
+      (s) => { ownResources = s.exists ? (s.data().items || []) : []; renderResources(); },
+      () => {},
+    );
+  }
+
+  function renderSheet() {
+    const id = route.id;
+    const fresh = !sheet || sheet.id !== id;
+    if (fresh) {
+      sheet = { id, account: null, contacts: null, tasks: null, errors: {}, loadedAt: null };
+      pins = new Set(); ownResources = []; editor = null; drawerOpen = false; showAllTimeline = false;
+      subscribeSheetDocs(id);
+    }
+    const app = document.getElementById("app");
+    mount(app,
+      h("div", { class: "sheet" },
+        h("aside", { class: "rail" },
+          h("div", { class: "rail-top" },
+            h("button", { type: "button", class: "back", onclick: () => go(null) }, "← All accounts"),
+            themeButton(true)),
+          h("section", { class: "identity", id: "identity" }),
+          h("div", { class: "rail-drawer" + (drawerOpen ? " open" : ""), id: "drawer" },
+            h("button", { type: "button", class: "drawer-toggle", "aria-expanded": String(drawerOpen), onclick: () => { drawerOpen = !drawerOpen; renderSheet(); } },
+              h("span", { id: "drawer-summary" }, "Quick facts & resources"), h("span", { "aria-hidden": "true" }, drawerOpen ? "▴" : "▾")),
+            h("div", { class: "drawer-body" },
+              h("section", { id: "facts" }),
+              h("section", { id: "resources" }))),
+          h("footer", { class: "rail-foot", id: "rail-foot" })),
+        h("main", { class: "main" },
+          h("div", { class: "main-top" },
+            h("span", { id: "loaded-at" }, "Loading from Salesforce…"),
+            h("button", { type: "button", class: "pill-btn", onclick: () => loadSheet(id, true) }, "Refresh")),
+          h("section", { class: "panel" },
+            h("div", { class: "panel-head" }, h("h2", {}, "Relationship snapshot")),
+            h("div", { id: "snapshot" })),
+          h("section", { class: "panel" },
+            h("div", { class: "panel-head" }, h("h2", {}, "Contacts"), h("span", { class: "meta num", id: "contacts-meta" })),
+            h("div", { id: "contacts" })),
+          h("div", { class: "split" },
+            h("section", { class: "panel" },
+              h("div", { class: "panel-head" }, h("h2", {}, "Engagement"), h("span", { class: "meta num", id: "tasks-meta" })),
+              h("div", { id: "timeline" })),
+            h("section", { class: "panel" },
+              h("div", { class: "panel-head" }, h("h2", {}, "In the news"), h("span", { class: "meta" }, "live search")),
+              h("div", { id: "news" }))))));
+    renderAccountParts();
+    renderContacts();
+    renderTimeline();
+    renderResources();
+    if (fresh) loadSheet(id, false);
+  }
+
+  async function loadSheet(id, freshData) {
+    if (!isSfId(id)) { sheet.errors.account = { message: "That link doesn’t contain a valid Salesforce Account ID." }; renderAccountParts(); return; }
+    if (!mcp) {
+      if (mcpState === "absent") { sheet.errors.account = { code: "not_granted" }; renderAccountParts(); }
+      return; // re-run once the connector resolves
+    }
+    const seq = ++sheetSeq;
+    const sid = soqlStr(id);
+    const current = () => seq === sheetSeq && route.view === "sheet" && route.id === id;
+    const loaded = document.getElementById("loaded-at");
+    if (loaded && freshData) loaded.textContent = "Refreshing from Salesforce…";
+
+    const jobs = {
+      account: soql(
+        `SELECT Id, Name, Type, Relationship_Status__c, TAM_Segment__c, Region__c, Country__c, ` +
+        `Current_Payments_Platform_Vendor__c, Account_Relationship_Summary__c, Account_Strategic_Notes__c, ` +
+        `Website, Industry, Owner.Name, LastActivityDate FROM Account WHERE Id = '${sid}' LIMIT 1`, { fresh: freshData }),
+      contacts: soql(
+        `SELECT Id, Name, Title, Email, Phone FROM Contact WHERE AccountId = '${sid}' ORDER BY LastName ASC NULLS LAST LIMIT 200`, { fresh: freshData }),
+      tasks: soql(
+        `SELECT Id, Subject, ActivityDate, CreatedDate, Status, IsClosed, TaskSubtype, Who.Name, Owner.Name ` +
+        `FROM Task WHERE WhatId = '${sid}' ORDER BY ActivityDate DESC NULLS LAST, CreatedDate DESC LIMIT 200`, { fresh: freshData }),
+    };
+    await Promise.all(Object.entries(jobs).map(async ([key, p]) => {
+      try {
+        const rows = await p;
+        if (!current()) return;
+        sheet[key] = key === "account" ? (rows[0] || false) : rows;
+        delete sheet.errors[key];
+      } catch (err) {
+        if (!current()) return;
+        sheet.errors[key] = err;
+      }
+      if (key === "account") renderAccountParts();
+      if (key === "contacts") renderContacts();
+      if (key === "tasks") renderTimeline();
+    }));
+    if (!current()) return;
+    sheet.loadedAt = new Date();
+    const el = document.getElementById("loaded-at");
+    if (el) mount(el, h("span", { class: "live-dot", "aria-hidden": "true" }), "Live from Salesforce · loaded ",
+      sheet.loadedAt.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" }));
+  }
+
+  function renderAccountParts() {
+    const a = sheet.account;
+    const err = sheet.errors.account;
+    const identity = document.getElementById("identity");
+    const facts = document.getElementById("facts");
+    const snapshot = document.getElementById("snapshot");
+    const news = document.getElementById("news");
+    const foot = document.getElementById("rail-foot");
+    if (!identity) return;
+
+    if (err || a === false) {
+      const view = a === false
+        ? h("div", { class: "notice" }, h("strong", {}, "Account not found"), "No Account with this ID is visible to your Salesforce user.")
+        : errorView(err);
+      mount(identity, h("span", { class: "eyebrow" }, "Account"), h("h1", {}, "Unavailable"));
+      mount(facts); mount(news);
+      mount(snapshot, view);
+      const loaded = document.getElementById("loaded-at");
+      if (loaded) loaded.textContent = "";
+      return;
+    }
+    if (!a) {
+      mount(identity, h("span", { class: "eyebrow" }, "Account"),
+        h("div", { class: "skeleton", style: "height:28px;width:80%;margin:8px 0 12px" }),
+        h("div", { class: "skeleton", style: "height:18px;width:50%" }));
+      mount(facts, [0, 1, 2, 3, 4].map(() => h("div", { class: "skeleton skel-line" })));
+      mount(snapshot, h("div", {}, [90, 75, 60].map((w) => h("div", { class: "skeleton skel-line", style: `width:${w}%` }))));
+      mount(news, h("div", { class: "skeleton", style: "height:52px" }));
+      return;
+    }
+
+    document.title = a.Name + " · Otoma Cheat Sheet";
+    const tone = statusTone(a.Relationship_Status__c);
+    mount(identity,
+      h("span", { class: "eyebrow" }, "Account"),
+      h("h1", {}, a.Name),
+      h("div", { class: "badges" },
+        a.Relationship_Status__c && h("span", { class: "badge " + tone }, a.Relationship_Status__c),
+        a.Type && h("span", { class: "badge" }, a.Type)));
+
+    const rows = [
+      ["Type", a.Type],
+      ["TAM segment", a.TAM_Segment__c],
+      ["Region", a.Region__c],
+      ["Country", a.Country__c],
+      ["Payments vendor", a.Current_Payments_Platform_Vendor__c],
+      ["Industry", a.Industry],
+      ["Owner", a.Owner && a.Owner.Name],
+      ["Last activity", a.LastActivityDate ? `${fmtDate(a.LastActivityDate)} (${relDays(a.LastActivityDate)})` : null],
+    ];
+    const site = safeUrl(a.Website);
+    mount(facts,
+      h("span", { class: "eyebrow" }, "Quick facts"),
+      h("dl", { class: "facts" },
+        rows.map(([k, v]) => [h("dt", {}, k), h("dd", { class: v ? "" : "none" }, v || "—")]),
+        site && [h("dt", {}, "Website"), h("dd", {}, extLink(site, {}, a.Website.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "")))]));
+
+    mount(snapshot, h("div", { class: "snapshot" },
+      h("div", {}, h("h3", {}, "Summary"), prose(a.Account_Relationship_Summary__c, "No relationship summary in Salesforce yet.")),
+      h("div", {}, h("h3", {}, "Strategic notes"), prose(a.Account_Strategic_Notes__c, "No strategic notes in Salesforce yet."))));
+
+    const name = newsName(a.Name);
+    const q = `"${name}"`;
+    mount(news,
+      h("div", { class: "news-links" },
+        extLink(`https://news.google.com/search?q=${encodeURIComponent(q + " when:30d")}&hl=en-US&gl=US&ceid=US:en`, { class: "news-link" },
+          h("span", {}, h("div", { class: "nl-title" }, "Google News · last 30 days"), h("div", { class: "nl-sub" }, q)),
+          h("span", { class: "arrow", "aria-hidden": "true" }, "↗")),
+        extLink(`https://www.bing.com/news/search?q=${encodeURIComponent(q)}&qft=interval%3d%228%22`, { class: "news-link" },
+          h("span", {}, h("div", { class: "nl-title" }, "Bing News · past month"), h("div", { class: "nl-sub" }, q)),
+          h("span", { class: "arrow", "aria-hidden": "true" }, "↗"))),
+      h("p", { class: "hint" }, "Opens a live news search in your browser. Your Zapier connection has no news feed to pull headlines in here."));
+
+    mount(foot, "Account ID ", h("span", { class: "num", style: "user-select:all" }, a.Id));
+    renderResources();
+  }
+
+  function newsName(accountName) {
+    const SUFFIX = /\b(inc|incorporated|llc|ltd|limited|plc|corp|corporation|co|company|gmbh|ag|sa|nv|bv|holdings?|group)\.?$/i;
+    let n = String(accountName).replace(/\(.*?\)/g, "").replace(/,/g, " ").trim();
+    for (let i = 0; i < 3; i++) { const next = n.replace(SUFFIX, "").trim(); if (!next) break; n = next; }
+    return n.replace(/\s+/g, " ");
+  }
+
+  // Contacts + primary pins
+  let pinError = null;
+  let pinWrite = Promise.resolve();
+
+  function renderContacts() {
+    const el = document.getElementById("contacts");
+    const meta = document.getElementById("contacts-meta");
+    if (!el || !sheet) return;
+    if (sheet.errors.contacts) { mount(el, errorView(sheet.errors.contacts)); return; }
+    if (!sheet.contacts) { mount(el, h("div", { class: "contacts" }, [0, 1, 2].map(() => h("div", { class: "skeleton", style: "height:96px" })))); return; }
+    const list = sheet.contacts;
+    const primaryCount = list.filter((c) => pins.has(c.Id)).length;
+    if (meta) meta.textContent = `${list.length} total${primaryCount ? ` · ${primaryCount} primary` : ""}`;
+    if (!list.length) { mount(el, h("p", { class: "empty" }, "No contacts on this account in Salesforce yet.")); return; }
+    const canPin = !!db;
+    const sorted = [...list].sort((x, y) => Number(pins.has(y.Id)) - Number(pins.has(x.Id)));
+    mount(el,
+      h("div", { class: "contacts" }, sorted.map((c) => {
+        const primary = pins.has(c.Id);
+        return h("article", { class: "contact" + (primary ? " primary" : "") },
+          primary && h("div", { class: "primary-label" }, "Primary"),
+          h("div", { class: "cname" }, c.Name),
+          h("div", { class: "ctitle" }, c.Title || "No title on record"),
+          h("div", { class: "links" },
+            c.Email ? h("a", { href: "mailto:" + c.Email, title: "Email " + c.Email }, c.Email) : h("span", { class: "missing" }, "No email"),
+            c.Phone && h("span", { style: "user-select:all" }, c.Phone)),
+          h("button", {
+            type: "button", class: "pin", "aria-pressed": String(primary), disabled: !canPin,
+            title: canPin ? (primary ? "Unmark as primary" : "Mark as primary") : "Pinning needs this page’s shared storage, which isn’t available in this view",
+            "aria-label": `${primary ? "Unmark" : "Mark"} ${c.Name} as primary contact`,
+            onclick: () => togglePin(c.Id),
+          }, primary ? "★" : "☆"));
+      })),
+      pinError && h("p", { class: "error-inline" }, pinError),
+      h("p", { class: "hint" }, "★ pins are saved with this page and shared with anyone you share it with. They don’t change Salesforce."));
+  }
+
+  function togglePin(contactId) {
+    if (!db || !sheet) return;
+    const id = sheet.id;
+    const next = new Set(pins);
+    next.has(contactId) ? next.delete(contactId) : next.add(contactId);
+    pins = next;
+    pinError = null;
+    renderContacts();
+    pinWrite = pinWrite.then(() => db.doc("pins/" + id).set({ ids: [...next], updatedAt: new Date().toISOString() }))
+      .catch((err) => {
+        pinError = err && err.code === "invalid_argument"
+          ? "You have view-only access to this page, so pins can’t be saved."
+          : "Couldn’t save the pin. Try again.";
+        renderContacts();
+      });
+  }
+
+  // Engagement timeline
+  function effDate(t) { return t.ActivityDate || localDay(parseSfDateTime(t.CreatedDate)); }
+  function isOverdue(t) { return !t.IsClosed && dayDiff(effDate(t)) < 0; }
+
+  function renderTimeline() {
+    const el = document.getElementById("timeline");
+    const meta = document.getElementById("tasks-meta");
+    if (!el || !sheet) return;
+    if (sheet.errors.tasks) { mount(el, errorView(sheet.errors.tasks)); return; }
+    if (!sheet.tasks) { mount(el, [0, 1, 2, 3].map(() => h("div", { class: "skeleton", style: "height:44px;margin-bottom:12px" }))); return; }
+    const tasks = sheet.tasks;
+    if (meta) meta.textContent = `${tasks.length}${tasks.length === 200 ? "+" : ""} ${tasks.length === 1 ? "task" : "tasks"}`;
+
+    const sorted = [...tasks].sort((a, b) => effDate(b).localeCompare(effDate(a)) || String(b.CreatedDate).localeCompare(String(a.CreatedDate)));
+    const past = sorted.filter((t) => dayDiff(effDate(t)) <= 0);
+    const upcoming = sorted.filter((t) => dayDiff(effDate(t)) > 0).reverse();
+
+    let density = null;
+    for (const w of DENSE_WINDOWS) {
+      const count = past.filter((t) => -dayDiff(effDate(t)) < w.days).length;
+      if (count >= w.min) { density = { count, days: w.days }; break; }
+    }
+    const daysSince = past[0] ? -dayDiff(effDate(past[0])) : null;
+    const stale = daysSince === null || daysSince > STALE_AFTER_DAYS;
+    const overdue = sorted.filter(isOverdue).length;
+
+    const callouts = h("div", { class: "callouts" },
+      density && h("span", { class: "callout" }, h("strong", { class: "num" }, density.count), ` touches in the last ${density.days} days`),
+      stale && h("span", { class: "callout rust" }, daysSince === null ? "No logged touches yet" : `No touches in ${daysSince} days`),
+      overdue > 0 && h("span", { class: "callout rust" }, h("strong", { class: "num" }, overdue), overdue === 1 ? " overdue task" : " overdue tasks"));
+
+    if (!tasks.length) { mount(el, callouts, h("p", { class: "empty" }, "No tasks logged against this account in Salesforce.")); return; }
+
+    const item = (t, isUpcoming) => {
+      const od = isOverdue(t);
+      const state = od ? "overdue" : isUpcoming ? "upcoming" : t.IsClosed ? "done" : "open";
+      const d = effDate(t);
+      return h("li", { class: "tl-item " + state },
+        h("div", { class: "tl-date num" },
+          h("span", {}, fmtDate(d)), h("span", {}, relDays(d)),
+          !t.ActivityDate && h("span", { title: "No due date; showing created date" }, "(created)")),
+        h("div", { class: "tl-subject" }, t.Subject || "(no subject)"),
+        h("div", { class: "tl-meta" },
+          h("span", { class: od ? "s-overdue" : !t.IsClosed ? "s-open" : "" }, od ? `Overdue · ${t.Status || "Open"}` : (t.Status || "—")),
+          t.TaskSubtype && t.TaskSubtype !== "Task" && h("span", {}, t.TaskSubtype),
+          t.Who && t.Who.Name && h("span", {}, "with " + t.Who.Name),
+          t.Owner && t.Owner.Name && h("span", {}, "by " + t.Owner.Name)));
+    };
+
+    const visible = showAllTimeline ? past : past.slice(0, TIMELINE_VISIBLE);
+    mount(el, callouts,
+      h("ol", { class: "timeline" },
+        upcoming.length > 0 && [h("li", { class: "tl-divider" }, "Upcoming"), upcoming.map((t) => item(t, true)), h("li", { class: "tl-divider" }, "History")],
+        visible.map((t) => item(t, false)),
+        past.length > visible.length && h("li", {},
+          h("button", { type: "button", class: "show-more", onclick: () => { showAllTimeline = true; renderTimeline(); } },
+            `Show ${past.length - visible.length} older ${past.length - visible.length === 1 ? "activity" : "activities"}`))));
+  }
+
+  // Quick Access resources: account links + defaults for the Type + defaults for all accounts
+  function resolvedResources(type) {
+    const base = [...(defaults.get("all") || []), ...(defaults.get(typeKey(type)) || [])];
+    const own = ownResources || [];
+    const byLabel = new Map(own.map((r) => [String(r.label).toLowerCase(), r]));
+    const merged = base.map((d) => byLabel.get(String(d.label).toLowerCase()) || d);
+    const seen = new Set(merged.map((r) => String(r.label).toLowerCase()));
+    return [...merged, ...own.filter((r) => !seen.has(String(r.label).toLowerCase()))];
+  }
+
+  function scopeDocId(scope, type) {
+    return scope === "account" ? null : scope === "all" ? "all" : typeKey(type);
+  }
+  function scopeItems(scope, type) {
+    if (scope === "account") return ownResources || [];
+    return defaults.get(scopeDocId(scope, type)) || [];
+  }
+
+  function renderResources() {
+    const el = document.getElementById("resources");
+    if (!el || !sheet) return;
+    const a = sheet.account || null;
+    const type = a ? a.Type : null;
+    const list = resolvedResources(type);
+    const summary = document.getElementById("drawer-summary");
+    if (summary) summary.textContent = `Quick facts · ${list.length} ${list.length === 1 ? "resource" : "resources"}`;
+
+    const head = h("div", { class: "section-head" },
+      h("span", { class: "eyebrow" }, "Quick access"),
+      db && !editor && h("button", { type: "button", class: "link-btn", onclick: () => openEditor("account") }, "Edit links"));
+
+    if (editor) { mount(el, head, editorView(type)); return; }
+
+    mount(el, head,
+      list.length
+        ? h("ul", { class: "resources" }, list.map((r) => {
+            const url = safeUrl(r.url);
+            return h("li", {}, url
+              ? extLink(url, { class: "resource" }, h("span", {}, r.label), h("span", { class: "arrow", "aria-hidden": "true" }, "↗"))
+              : h("span", { class: "resource pending", title: "No link yet. Use Edit links to add one." }, h("span", {}, r.label), h("span", { class: "tag" }, "Pending")));
+          }))
+        : h("p", { class: "rail-note" }, db ? "No resources yet. Use Edit links to add your POV, one-pagers and case studies." : "Resource links need this page’s shared storage, which isn’t available in this view."));
+  }
+
+  function openEditor(scope) {
+    const type = sheet.account ? sheet.account.Type : null;
+    editor = { scope, rows: scopeItems(scope, type).map((r) => ({ label: r.label || "", url: r.url || "" })), saving: false, error: null };
+    if (!editor.rows.length) editor.rows.push({ label: "", url: "" });
+    drawerOpen = true;
+    renderResources();
+  }
+
+  function editorView(type) {
+    const typeLabel = type ? `All ${type} accounts` : "All accounts with no Type";
+    const scopeSel = h("select", {
+      id: "res-scope",
+      onchange: (e) => openEditor(e.target.value),
+    },
+      h("option", { value: "account", selected: editor.scope === "account" }, "This account only"),
+      h("option", { value: "type", selected: editor.scope === "type" }, typeLabel),
+      h("option", { value: "all", selected: editor.scope === "all" }, "Every account"));
+
+    const rows = editor.rows.map((r, i) => h("div", { class: "row" },
+      h("div", {},
+        h("input", { id: `res-label-${i}`, placeholder: "Label, e.g. Otoma POV (PDF)", value: r.label, "aria-label": "Link label", oninput: (e) => { r.label = e.target.value; } }),
+        h("input", { id: `res-url-${i}`, placeholder: "https://… (leave empty = pending)", value: r.url, "aria-label": "Link URL", oninput: (e) => { r.url = e.target.value; } })),
+      h("button", { type: "button", class: "remove", title: "Remove link", "aria-label": "Remove link", onclick: () => { editor.rows.splice(i, 1); renderResources(); } }, "×")));
+
+    return h("div", { class: "editor" },
+      h("label", { for: "res-scope" }, "Show these links on", scopeSel),
+      rows,
+      h("button", { type: "button", class: "link-btn", style: "justify-self:start", onclick: () => { editor.rows.push({ label: "", url: "" }); renderResources(); } }, "+ Add link"),
+      editor.scope !== "account" && h("p", { class: "rail-note", style: "margin:0" }, "A link on this account with the same label replaces the shared one here."),
+      editor.error && h("div", { class: "err" }, editor.error),
+      h("div", { class: "actions" },
+        h("button", { type: "button", class: "link-btn", onclick: () => { editor = null; renderResources(); } }, "Cancel"),
+        h("button", { type: "button", class: "primary", disabled: editor.saving, onclick: () => saveEditor(type) }, editor.saving ? "Saving…" : "Save links")));
+  }
+
+  async function saveEditor(type) {
+    const items = [];
+    for (const r of editor.rows) {
+      const label = r.label.trim();
+      if (!label) continue;
+      const raw = r.url.trim();
+      if (raw && !safeUrl(raw)) { editor.error = `“${raw}” isn’t a web link. Use an https:// address or leave it empty.`; renderResources(); return; }
+      items.push({ label: label.slice(0, 120), url: raw ? safeUrl(raw) : "" });
+    }
+    editor.saving = true; editor.error = null; renderResources();
+    const path = editor.scope === "account" ? "resources/" + sheet.id : "resource-defaults/" + scopeDocId(editor.scope, type);
+    try {
+      await db.doc(path).set({ items, updatedAt: new Date().toISOString() });
+      editor = null;
+    } catch (err) {
+      editor.saving = false;
+      editor.error = err && err.code === "invalid_argument" ? "You have view-only access to this page, so links can’t be saved." : "Couldn’t save. Try again.";
+    }
+    renderResources();
+  }
+
+  // ── Render + boot ──────────────────────────────────────────────────────
+  function render() {
+    applyTheme();
+    if (route.view === "sheet") renderSheet();
+    else { teardownSheetSubs(); sheet = null; document.title = "Otoma Account Cheat Sheet"; renderSearch(); }
+  }
+
+  readHash();
+  render();
+
+  const use = window.claude && typeof window.claude.use === "function" ? window.claude.use.bind(window.claude) : null;
+  if (!use) {
+    mcpState = "absent"; dbState = "absent";
+    render();
+  } else {
+    use("mcp").then((m) => {
+      mcp = m; mcpState = m ? "ready" : "absent";
+      if (route.view === "sheet") { sheet = null; render(); } else runSearch();
+    }).catch(() => { mcpState = "absent"; render(); });
+    use("db").then((d) => {
+      db = d; dbState = d ? "ready" : "absent";
+      subscribeDefaults();
+      if (route.view === "sheet" && sheet) { subscribeSheetDocs(sheet.id); renderContacts(); renderResources(); }
+    }).catch(() => { dbState = "absent"; });
+  }
+})();
+</script>
