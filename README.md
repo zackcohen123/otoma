@@ -1,5 +1,7 @@
 # Otoma Account Cheat Sheet
 
+> This repo also contains the **GTM KPI tracker** in [`kpi-tracker/`](kpi-tracker/README.md), a separate app.
+
 A pre-call briefing page for any Salesforce Account. Search for a company, open its sheet, and in under a
 minute you have its identity, relationship notes, contacts, engagement history, resources, and recent
 news.

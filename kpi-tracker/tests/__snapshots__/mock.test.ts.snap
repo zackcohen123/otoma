@@ -1,0 +1,28 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`definitions > are generated from config 1`] = `
+{
+  "activeNoNextAction": "Contacts marked as active deal contacts with no next action recorded.",
+  "bantCompleteness": "Share of open opportunities with all 4 BANT elements confirmed. Weight 15.",
+  "contactBuckets": "Priority accounts grouped by how many contacts they have: 0, 1 to 2, 3 to 4, 5 or more.",
+  "contactCompleteness": "Share of contacts at priority accounts with persona, seniority, LinkedIn URL, email and title all filled in. Weight 15.",
+  "conversations": "A genuine conversation is a meeting or call that has already happened with someone outside Otoma. Each Salesforce record counts once. Target: 15 a week. Meetings (Event): finished (end time has passed), not all-day, not an invitee copy, at least 10 minutes long, and the subject does not contain "canceled", "cancelled", "declined". It must look like a conversation: Location contains "microsoft teams", "teams", "zoom.us", "meet.google.com", "stand", "booth", or Subject contains "teams", "call", "catch up", "catchup", "intro", "discovery", "connect", "<>", "meeting", "[external]" (not case-sensitive). It must involve an external party: the Event is linked to a Contact or to an Account other than "Otoma", or, when it has no link, its subject names a Salesforce account (aliases: NBG = National Bank of Greece) or contains "[external]". Calls (Task): subtype Call, status Completed, linked to a Contact or Account, and at least 60 seconds long when a duration is recorded (calls with no duration count). "Booked next 7 days" applies the same rule to meetings that start in the next 7 days.",
+  "coverage": "Priority accounts are Accounts with TAM segment "Priority TAM". Contacts are counted by their Account.",
+  "duplicateContacts": "Share of contacts with an email address that no other contact shares. Weight 5.",
+  "engagementRate": "Share of priority accounts whose relationship status is set and is not "Not Engaged". A snapshot is stored once a week to build the trend.",
+  "freshness": "Share of accounts with status "Engaged", "Active Opportunity" whose last meaningful interaction date is within the last 30 days. Weight 10.",
+  "healthScore": "Weighted average of the metric pass rates below, from 0 to 100. Green at 80 and above, amber at 60 to 79, red below 60. Metrics with nothing to measure are left out.",
+  "multiThreading": "Share of open opportunities with at least 5 contact roles. Weight 10.",
+  "openPipeline": "Open opportunities (not closed) grouped by stage, with count and total Amount. Weighted value is Amount times Probability, shown only when Probability is filled in.",
+  "oppHygiene": "Share of open opportunities with a next step, an Amount, and a close date of today or later. Weight 10.",
+  "overdueOpps": "Open opportunities with a close date in the past.",
+  "personaGaps": "For each Contact persona picklist value, the number of priority accounts with no contact of that persona.",
+  "pipeline": "Sum of Amount for opportunities created in the current calendar quarter, open or won (closed lost excluded; a blank Amount counts as zero). Target is 3 times the bookings target, which is not set yet.",
+  "priorityWithContact": "Share of priority accounts with at least 1 contact. Weight 20.",
+  "priorityWithMinContacts": "Share of priority accounts with at least 3 contacts. Weight 15.",
+  "qualifiedOpps": "Opportunities created in the calendar month with at least 4 of the 4 BANT elements (Budget, Authority, Need, Timeline) confirmed. Confirmed means the checkbox is ticked, or a picklist value of "yes", "confirmed", "true". Target: 4 to 6 a month.",
+  "stalledOpps": "Open opportunities with no activity for 14 days or more (or none logged).",
+  "warmIntros": "Contacts with a warm introduction available at accounts still "Not Engaged".",
+  "weeks": "Weeks run Monday to Sunday in Europe/London time. Months and quarters are calendar months and quarters in the same timezone.",
+}
+`;
