@@ -1,7 +1,7 @@
 # Otoma GTM KPI tracker
 
-A small, private dashboard of GTM KPIs, read live from Salesforce through the Zapier MCP server.
-Read-only, password-protected, cached, and driven by one config file.
+A small dashboard of GTM KPIs, read live from Salesforce through the Zapier MCP server.
+Read-only, cached, opened from a link (no password), and driven by one config file.
 
 - **Headline KPIs:** genuine conversations per week, qualified opportunities per month, pipeline created
   this quarter against 3x bookings.
@@ -21,7 +21,7 @@ MOCK=1 npm run dev          # fixture data, no network: http://localhost:3000
 With real data:
 
 ```bash
-cp .env.example .env        # set ZAPIER_MCP_URL and DASHBOARD_PASSWORD
+cp .env.example .env        # set ZAPIER_MCP_URL (and optionally DASHBOARD_LINK_KEY)
 npm run spike               # optional connection check (costs about 30 Zapier tasks)
 npm run dev
 ```
@@ -37,8 +37,7 @@ To see the warning states in mock mode, set `MOCK_SCENARIO` to `truncated`, `emp
 |---|---|---|
 | `ZAPIER_MCP_URL` | yes, unless `MOCK=1` | Contains a secret. Server-side only, never logged. |
 | `ZAPIER_MCP_TOKEN` | no | Bearer token, for servers that use one. |
-| `DASHBOARD_PASSWORD` | in production | HTTP basic auth. Without it, production serves a 503. |
-| `DASHBOARD_USER` | no | Default `otoma`. |
+| `DASHBOARD_LINK_KEY` | no | Private link key. Unset means anyone with the URL can open it. |
 | `MOCK`, `MOCK_SCENARIO` | no | Fixture data and warning scenarios. |
 | `CACHE_DIR` | no | Default `.cache/`. Must be writable and persistent for the weekly history. |
 
@@ -117,9 +116,16 @@ Rough monthly cost at 8 calls per refresh (check whether your plan bills more th
 
 To cut cost further, raise `cache.ttlMinutes` (for example to 240).
 
-## Deploying privately
+## Deploying and sharing the link
 
-Never deploy without `DASHBOARD_PASSWORD`. Pages also send `noindex` headers.
+There is no password. Open the dashboard straight from its URL.
+
+- **Open link (default):** with `DASHBOARD_LINK_KEY` unset, anyone who has or guesses the URL can see it,
+  including bank contact names. Pages send `noindex` headers, but that is not access control.
+- **Private link (recommended):** set `DASHBOARD_LINK_KEY` to a long random string (for example the
+  output of `openssl rand -hex 16`) and bookmark or share `https://<host>/?key=<that string>`. The key is
+  saved in a cookie for a year and removed from the address bar, so the plain URL keeps working in that
+  browser. Anyone without the key gets a 404. To revoke access, change the key.
 
 - **Render, Railway or Fly.io (recommended):** set the root directory to `kpi-tracker`, the build command
   to `npm install && npm run build`, and the start command to `npm start`. Attach a small persistent disk

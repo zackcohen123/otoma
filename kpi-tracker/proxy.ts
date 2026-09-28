@@ -1,7 +1,11 @@
-// Password gate (HTTP basic auth) for every page and API route.
-// Set DASHBOARD_PASSWORD (and optionally DASHBOARD_USER, default "otoma").
-// In production the app refuses to serve anything if no password is set.
+// Optional private link. No password prompt.
+// - DASHBOARD_LINK_KEY unset: the dashboard is open to anyone with the URL.
+// - DASHBOARD_LINK_KEY set: open https://<host>/?key=<key> once. The key is stored in a cookie
+//   and removed from the address bar, so later visits (and bookmarks) just work. Requests
+//   without the key get a plain 404.
 import { NextResponse, type NextRequest } from 'next/server';
+
+const COOKIE = 'gtm_kpis_key';
 
 function safeEqual(a: string, b: string) {
   if (a.length !== b.length) return false;
@@ -11,20 +15,28 @@ function safeEqual(a: string, b: string) {
 }
 
 export function proxy(req: NextRequest) {
-  const password = process.env.DASHBOARD_PASSWORD;
-  if (!password) {
-    if (process.env.NODE_ENV === 'production') {
-      return new NextResponse('DASHBOARD_PASSWORD is not set, so the dashboard is locked.', { status: 503 });
-    }
-    return NextResponse.next(); // local development without a password
+  const key = process.env.DASHBOARD_LINK_KEY;
+  if (!key) return NextResponse.next();
+
+  const fromUrl = req.nextUrl.searchParams.get('key');
+  if (fromUrl && safeEqual(fromUrl, key)) {
+    const clean = req.nextUrl.clone();
+    clean.searchParams.delete('key');
+    const res = NextResponse.redirect(clean);
+    res.cookies.set(COOKIE, key, {
+      httpOnly: true,
+      secure: req.nextUrl.protocol === 'https:',
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 60 * 60 * 24 * 365,
+    });
+    return res;
   }
-  const user = process.env.DASHBOARD_USER || 'otoma';
-  const header = req.headers.get('authorization') ?? '';
-  if (header.startsWith('Basic ')) {
-    const [u, ...rest] = atob(header.slice(6)).split(':');
-    if (safeEqual(u, user) && safeEqual(rest.join(':'), password)) return NextResponse.next();
-  }
-  return new NextResponse('Authentication required', { status: 401, headers: { 'WWW-Authenticate': 'Basic realm="GTM KPIs", charset="UTF-8"' } });
+
+  const fromCookie = req.cookies.get(COOKIE)?.value;
+  if (fromCookie && safeEqual(fromCookie, key)) return NextResponse.next();
+
+  return new NextResponse('Not found', { status: 404 });
 }
 
 export const config = { matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'] };
